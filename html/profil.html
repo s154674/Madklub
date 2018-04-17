@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Madklub</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://use.fontawesome.com/252beef44e.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div>
+        <a class="overlay2"></a>
+    </div>
+
+    <div class="nav">
+
+        <label for="toggle">
+            <i class="fas fa-bars"></i>
+        </label>
+
+
+        <input type="checkbox" id="toggle" />
+
+        <div class="menu">
+            <div class="floatleft">Profil</div>
+            <div class="floatright">
+                <div class="menulinks">
+                    <a href="./index.html">Forside</a>
+                    <a href="./status.html">Status</a>
+                    <a href="./maddage.html">Maddage</a>
+                    <a href="./profil.html" class="active-page">Profil</a>
+                    <a href="./regler.html">Regler</a>
+                    <a href="./login.html">Login</a>
+
+
+
+                </div>
+
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="titel">
+            <i class="fa fa-user-circle-o  fa-3x" aria-hidden="true"></i>
+            <h2>Christoffer Bendtsen</h2>
+
+        </div>
+
+
+
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Buttons -->
+        <div class="felt">
+            <h2>Maddage</h2>
+            <div class=buttons>
+                <a class="btn trigger-frameld first" href="#">Frameld</a>
+                <a class="btn trigger-later" href="#">Senere</a>
+                <a class="btn trigger-guest" href="#">Gæst</a>
+                <a class="btn trigger-noguest" href="#">Afmeld gæst</a>
+                <a class="btn trigger-tilmeld last" href="#">Tilmeld igen</a>
+            </div>
+        </div>
+
+
+
+        <div class="felt">
+            <h2>Bytte bytte købmand</h2>
+            <div class=buttons>
+                <a class="btn trigger-maddag first last" href="#">Tag maddag</a>
+            </div>
+        </div>
+
+
+        <div class="felt">
+            <h2>Brugerindstillinger</h2>
+            <div class=buttons>
+                <a class="btn trigger-username first" href="#">Skift brugernavn</a>
+                <a class="btn trigger-password" href="#">Skift kodeord</a>
+                <a class="btn trigger-forgot last" href="#">Glemt kodeord</a>
+            </div>
+        </div>
+
+
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Modal Frameld -->
+        <div class="modal-wrapper frameld">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger-frameld" href="#">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                </div>
+                <div class="popup">
+                    <div class="question">
+                        <h1>Hvornår vil du frameldes?</h1>
+                        <div class="scroll">
+                            <p>asdsfsdf sdf sdf ds fsdf sd sd fsd fsd f sd fds f dsf sd fds fsd f sdf ds f sdf sd fs df sdf sd fs df sd fsd fs f sd fsd fs df sd fs df s fsd f ds fs df sdf sd fs df ds fs df sd fsd f sd fs df s fs df sdf sdfsdf sdfsdfdsfsdfsdfsdfsdf sdf sdfsd fsd f sfds ds f s fsd fds fds dfs ds fsd fds dfs fsd fsd fds fds fsd dfs dfs fds dfs dsf sdf dfs fds sdf fds dfs fds fsd fds dfs fds dsfdsfds</p>
+                            <p>asdsfsdf sdf sdf ds fsdf sd sd fsd fsd f sd fds f dsf sd fds fsd f sdf ds f sdf sd fs df sdf sd fs df sd fsd fs f sd fsd fs df sd fs df s fsd f ds fs df sdf sd fs df ds fs df sd fsd f sd fs df s fs df sdf sdfsdf sdfsdfdsfsdfsdfsdfsdf sdf sdfsd fsd f sfds ds f s fsd fds fds dfs ds fsd fds dfs fsd fsd fds fds fsd dfs dfs fds dfs dsf sdf dfs fds sdf fds dfs fds fsd fds dfs fds dsfdsfds</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Modal Senere -->
+
+        <div class="modal-wrapper later">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger-later" href="#">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                </div>
+                <div class="popup">
+                    <div class="question">
+                        <h1>Hvornår vil du på senere?</h1>
+                        <div class="scroll">
+                            <p>asdsfsdf sdf sdf ds fsdf sd sd fsd fsd f sd fds f dsf sd fds fsd f sdf ds f sdf sd fs df sdf sd fs df sd fsd fs f sd fsd fs df sd fs df s fsd f ds fs df sdf sd fs df ds fs df sd fsd f sd fs df s fs df sdf sdfsdf sdfsdfdsfsdfsdfsdfsdf sdf sdfsd fsd f sfds ds f s fsd fds fds dfs ds fsd fds dfs fsd fsd fds fds fsd dfs dfs fds dfs dsf sdf dfs fds sdf fds dfs fds fsd fds dfs fds dsfdsfds</p>
+
+                            <p>asdsfsdf sdf sdf ds fsdf sd sd fsd fsd f sd fds f dsf sd fds fsd f sdf ds f sdf sd fs df sdf sd fs df sd fsd fs f sd fsd fs df sd fs df s fsd f ds fs df sdf sd fs df ds fs df sd fsd f sd fs df s fs df sdf sdfsdf sdfsdfdsfsdfsdfsdfsdf sdf sdfsd fsd f sfds ds f s fsd fds fds dfs ds fsd fds dfs fsd fsd fds fds fsd dfs dfs fds dfs dsf sdf dfs fds sdf fds dfs fds fsd fds dfs fds dsfdsfds</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Modal Gæst -->
+        <div class="modal-wrapper guest">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger-guest" href="#">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                </div>
+                <div class="popup">
+                    <div class="question">
+                        <h1>Hvornår vil du have en gæst med?</h1>
+                        <div class="scroll">
+                            <p>asdsfsdf sdf sdf ds fsdf sd sd fsd fsd f sd fds f dsf sd fds fsd f sdf ds f sdf sd fs df sdf sd fs df sd fsd fs f sd fsd fs df sd fs df s fsd f ds fs df sdf sd fs df ds fs df sd fsd f sd fs df s fs df sdf sdfsdf sdfsdfdsfsdfsdfsdfsdf sdf sdfsd fsd f sfds ds f s fsd fds fds dfs ds fsd fds dfs fsd fsd fds fds fsd dfs dfs fds dfs dsf sdf dfs fds sdf fds dfs fds fsd fds dfs fds dsfdsfds</p>
+                            <p>asdsfsdf sdf sdf ds fsdf sd sd fsd fsd f sd fds f dsf sd fds fsd f sdf ds f sdf sd fs df sdf sd fs df sd fsd fs f sd fsd fs df sd fs df s fsd f ds fs df sdf sd fs df ds fs df sd fsd f sd fs df s fs df sdf sdfsdf sdfsdfdsfsdfsdfsdfsdf sdf sdfsd fsd f sfds ds f s fsd fds fds dfs ds fsd fds dfs fsd fsd fds fds fsd dfs dfs fds dfs dsf sdf dfs fds sdf fds dfs fds fsd fds dfs fds dsfdsfds</p>
+                            <p>asdsfsdf sdf sdf ds fsdf sd sd fsd fsd f sd fds f dsf sd fds fsd f sdf ds f sdf sd fs df sdf sd fs df sd fsd fs f sd fsd fs df sd fs df s fsd f ds fs df sdf sd fs df ds fs df sd fsd f sd fs df s fs df sdf sdfsdf sdfsdfdsfsdfsdfsdfsdf sdf sdfsd fsd f sfds ds f s fsd fds fds dfs ds fsd fds dfs fsd fsd fds fds fsd dfs dfs fds dfs dsf sdf dfs fds sdf fds dfs fds fsd fds dfs fds dsfdsfds</p>
+                            <p>asdsfsdf sdf sdf ds fsdf sd sd fsd fsd f sd fds f dsf sd fds fsd f sdf ds f sdf sd fs df sdf sd fs df sd fsd fs f sd fsd fs df sd fs df s fsd f ds fs df sdf sd fs df ds fs df sd fsd f sd fs df s fs df sdf sdfsdf sdfsdfdsfsdfsdfsdfsdf sdf sdfsd fsd f sfds ds f s fsd fds fds dfs ds fsd fds dfs fsd fsd fds fds fsd dfs dfs fds dfs dsf sdf dfs fds sdf fds dfs fds fsd fds dfs fds dsfdsfds</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Modal Afmeld Gæst -->
+        <div class="modal-wrapper noguest">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger-noguest" href="#">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                </div>
+                <div class="popup">
+                    <div class="question">
+                        <h1>Hvornår vil du framelde din gæst?</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Modal Tilmeld Igen -->
+        <div class="modal-wrapper tilmeld">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger-tilmeld" href="#">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                </div>
+                <div class="popup">
+                    <div class="question">
+                        <h1>Hvornår vil du meldes til?</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Modal Tilmeld Igen -->
+        <div class="modal-wrapper maddag">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger-maddag" href="#">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                </div>
+                <div class="popup">
+                    <div class="question">
+                        <h1>Hvilken maddag vil du tage?</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Modal Tilmeld Igen -->
+        <div class="modal-wrapper username">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger-username" href="#">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                </div>
+                <div class="popup">
+                    <div class="question">
+                        <h1>Hvad skal dit nye brugernavn være?</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Modal Tilmeld Igen -->
+        <div class="modal-wrapper password">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger-password" href="#">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                </div>
+                <div class="popup">
+                    <div class="question">
+                        <h1>Hvad skal dit nye kodeord være?</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ----------------------------------------- -->
+
+        <!-- Modal Tilmeld Igen -->
+        <div class="modal-wrapper forgot">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger-forgot" href="#">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                </div>
+                <div class="popup">
+                    <div class="question">
+                        <h1>Helt ærligt</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ----------------------------------------- -->
+
+    </div>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('.trigger-frameld').on('click', function() {
+                $('.modal-wrapper.frameld').toggleClass('open');
+                $('body').css('overflow', 'hidden');
+
+            });
+            $('.trigger-later').on('click', function() {
+                $('.modal-wrapper.later').toggleClass('open');
+                $('body').css('overflow', 'hidden');
+            });
+            $('.trigger-guest').on('click', function() {
+                $('.modal-wrapper.guest').toggleClass('open');
+                $('body').css('overflow', 'hidden');
+            });
+            $('.trigger-noguest').on('click', function() {
+                $('.modal-wrapper.noguest').toggleClass('open');
+                $('body').css('overflow', 'hidden');
+            });
+            $('.trigger-tilmeld').on('click', function() {
+                $('.modal-wrapper.tilmeld').toggleClass('open');
+                $('body').css('overflow', 'hidden');
+            });
+            $('.trigger-maddag').on('click', function() {
+                $('.modal-wrapper.maddag').toggleClass('open');
+                $('body').css('overflow', 'hidden');
+            });
+            $('.trigger-username').on('click', function() {
+                $('.modal-wrapper.username').toggleClass('open');
+                $('body').css('overflow', 'hidden');
+            });
+            $('.trigger-password').on('click', function() {
+                $('.modal-wrapper.password').toggleClass('open');
+                $('body').css('overflow', 'hidden');
+            });
+            $('.trigger-forgot').on('click', function() {
+                $('.modal-wrapper.forgot').toggleClass('open');
+                $('body').css('overflow', 'hidden');
+            });
+
+            return false;
+        });
+
+        $(document).ready(function() {
+            $('.btn-close').on('click', function() {
+                $('body').css('overflow', 'auto');
+            });
+
+            return false;
+        });
+
+
+        $(document).ready(function() {
+            $('.fas').click(function() {
+                if ($('.overlay2').css('visibility') == 'hidden')
+                    $('.overlay2').css('visibility', 'visible');
+                else
+                    $('.overlay2').css('visibility', 'hidden');
+            });
+        });
+
+    </script>
+
+
+</body>
+
+</html>

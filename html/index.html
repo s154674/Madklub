@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Madklub</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://use.fontawesome.com/252beef44e.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="nav">
+
+        <label for="toggle">
+            <i class="fas fa-bars"></i>
+        </label>
+
+        <input type="checkbox" id="toggle" />
+
+        <div class="menu">
+            <div class="floatleft">Forside</div>
+            <div class="floatright">
+                <div class="menulinks">
+                    <a href="./index.html" class="active-page">Forside</a>
+                    <a href="./status.html">Status</a>
+                    <a href="./maddage.html">Maddage</a>
+                    <a href="./profil.html">Profil</a>
+                    <a href="./regler.html">Regler</a>
+                    <a href="./login.html">Login</a>
+                    <a class="overlay"></a>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+
+
+    <div class="content">
+        <div class="titel">
+            <i class="fa fa-cutlery fa-3x" aria-hidden="true"></i>
+            <h2>Madklub LM-lige</h2>
+        </div>
+        <div class="felt">
+            <h2>Information</h2>
+            <div class="hvid">
+                <p class="date">Dato: [[date]]</p>
+                <p class="chef">Kok: [[chef]]</p>
+                <p class="helper">Hjælper: [[helper]]</p>
+                <p class="dish">Dagens ret: [[dish]]</p>
+            </div>
+        </div>
+
+        <div class="attendance3">
+
+
+
+            <div class="felt">
+                <h2>Folk der kommer</h2>
+
+                <div class="attendance1">
+                    <a onclick="myFunction1()" class="tilMad knap">Til mad<br>[[x1]]</a>
+                    <a onclick="myFunction2()" class="tilBords knap">Til bords<br>[[x2]]</a>
+                    <a onclick="myFunction3()" class="senere knap">På senere<br>[[x3]]</a>
+                </div>
+
+                <div class="attendance2">
+                    <div id="eatingList">
+
+                        <ul>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                            <li>Spiser med</li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div id="attendingList">
+
+                    <ul>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                        <li>Er til bords</li>
+                    </ul>
+
+
+                </div>
+
+                <div id="laterList">
+
+                    <ul>
+                        <li>Kommer senere</li>
+                        <li>Kommer senere</li>
+                        <li>Kommer senere</li>
+                    </ul>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="dishwashers">
+
+            <div class="felt">
+                <h2>Opvaskere</h2>
+                <table>
+                    <tr>
+                        <td>Opvasker 1</td>
+                    </tr>
+                    <tr>
+                        <td>Opvasker 2</td>
+                    </tr>
+                    <tr>
+                        <td>Opvasker 3</td>
+                    </tr>
+
+                    <tr>
+                        <td>Opvasker 4</td>
+                    </tr>
+                    <tr>
+                        <td class="different">Opvasker 5</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="nextup">
+
+            <div class="felt">
+                <h2>Næste maddags kok</h2>
+                <div class="hvid">
+                    <p class="nextchef">[[nextchef]]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function myFunction1() {
+            var x1 = document.getElementById("eatingList");
+            var x2 = document.getElementById("attendingList");
+            var x3 = document.getElementById("laterList");
+            var x4 = document.querySelector(".tilMad");
+
+            if (x1.style.display === "block") {
+                x1.style.display = "none";
+                x4.style.backgroundColor = "var(--MyBlue)";
+                document.querySelector(".tilMad").style.borderRadius = "10px 10px 10px 10px";
+            } else {
+                x1.style.display = "block";
+                x2.style.display = "none";
+                x3.style.display = "none";
+                document.querySelector(".tilMad").style.backgroundColor = "var(--MySilver)";
+                document.querySelector(".tilBords").style.backgroundColor = "var(--MyBlue)";
+                document.querySelector(".senere").style.backgroundColor = "var(--MyBlue)";
+                document.querySelector(".tilMad").style.borderRadius = "10px 10px 0px 0px";
+                document.querySelector(".senere").style.borderRadius = "10px 10px 10px 10px";
+                document.querySelector(".tilBords").style.borderRadius = "10px 10px 10px 10px";
+            }
+        }
+
+        function myFunction2() {
+            var x1 = document.getElementById("eatingList");
+            var x2 = document.getElementById("attendingList");
+            var x3 = document.getElementById("laterList");
+            var x5 = document.querySelector(".tilBords");
+
+            if (x2.style.display === "block") {
+                x2.style.display = "none";
+                x5.style.backgroundColor = "var(--MyBlue)";
+                document.querySelector(".tilBords").style.borderRadius = "10px 10px 10px 10px";
+            } else {
+                x2.style.display = "block";
+                x1.style.display = "none";
+                x3.style.display = "none";
+                document.querySelector(".tilMad").style.backgroundColor = "var(--MyBlue)";
+                document.querySelector(".tilBords").style.backgroundColor = "var(--MySilver)";
+                document.querySelector(".senere").style.backgroundColor = "var(--MyBlue)";
+                document.querySelector(".tilBords").style.borderRadius = "10px 10px 0px 0px";
+                document.querySelector(".senere").style.borderRadius = "10px 10px 10px 10px";
+                document.querySelector(".tilMad").style.borderRadius = "10px 10px 10px 10px";
+
+            }
+        }
+
+        function myFunction3() {
+            var x1 = document.getElementById("eatingList");
+            var x2 = document.getElementById("attendingList");
+            var x3 = document.getElementById("laterList");
+            var x6 = document.querySelector(".senere");
+
+            if (x3.style.display === "block") {
+                x3.style.display = "none";
+                x6.style.backgroundColor = "var(--MyBlue)";
+                document.querySelector(".senere").style.borderRadius = "10px 10px 10px 10px";
+            } else {
+                x3.style.display = "block";
+                x1.style.display = "none";
+                x2.style.display = "none";
+                document.querySelector(".tilMad").style.backgroundColor = "var(--MyBlue)";
+                document.querySelector(".tilBords").style.backgroundColor = "var(--MyBlue)";
+                document.querySelector(".senere").style.backgroundColor = "var(--MySilver)";
+                document.querySelector(".senere").style.borderRadius = "10px 10px 0px 0px";
+                document.querySelector(".tilBords").style.borderRadius = "10px 10px 10px 10px";
+                document.querySelector(".tilMad").style.borderRadius = "10px 10px 10px 10px";
+
+            }
+        }
+
+    </script>
+</body>
+
+</html>
