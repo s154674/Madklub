@@ -1,7 +1,13 @@
-$(".menulinks a").on('click', function(){
-    $(".menulinks a").removeClass("active-page");
-    $(this).addClass("active-page");
+$(document).ready(function(){
+    $("#slider").slick({
+        arrows: false,
+        slidesToShow: 1
+    });
+});
 
+
+
+$(".menulinks a").on('click', function(){
     switch($(this).html()) {
         case "Forside":
             loadForside();
@@ -24,12 +30,16 @@ $(".menulinks a").on('click', function(){
         default:
             // Noget er gået galt
     }
+
+    $(".menulinks a").removeClass("active-page");
+    $(this).addClass("active-page");
 })
 
 function loadForside(){
     $("#toggle").prop('checked', false);
     $(".content").slideUp();
     $("#forside-content").slideDown();
+
 }
 
 function loadStatus(){
