@@ -23,6 +23,7 @@ $app->get('/{path}', function (Request $request, Response $response) {
     }
 });
 
+<<<<<<< HEAD
 // Log ind
 $app->post('/login', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
@@ -61,3 +62,5 @@ $app->post('/login', function (Request $request, Response $response) {
     }
 
 });
+=======
+>>>>>>> 9c57782d355b9f8f33a3428eb99c0260207bc625
