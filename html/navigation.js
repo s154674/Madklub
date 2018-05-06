@@ -40,6 +40,7 @@ function loadStatus(){
 
 function loadMaddage(){
     $("#toggle").prop('checked', false);
+    updateMaddag();
     $(".content").slideUp();
     $("#maddage-content").slideDown();
 }
