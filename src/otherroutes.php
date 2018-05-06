@@ -2,6 +2,12 @@
 
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Firebase\JWT\JWT;
+use Firebase\JWT\SignatureInvalidException;
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException;
+
+
 /*  $this->logger->addInfo('Something interesting happened'); */
 
 // Routes
@@ -21,11 +27,13 @@ $app->get('/{path}', function (Request $request, Response $response) {
             ->withStatus(500)
             ->write("could not update user");
     }
-});
+})->add($authonly);
 
-<<<<<<< HEAD
+
+
 // Log ind
 $app->post('/login', function (Request $request, Response $response) {
+    $jwtkey = "123456";
     $body = $request->getParsedBody();
     $brugernavn = $body['login'];
     $password = $body['password'];
@@ -48,19 +56,26 @@ $app->post('/login', function (Request $request, Response $response) {
             ->write("could not authorize user");
     }
 
-    $sql = "SELECT * FROM users WHERE login=\"".$brugernavn."\";";
+    $sql = "SELECT * FROM users WHERE login=\"".$brugernavn."\" LIMIT 1;";
     $result = mysqli_query($this->link, $sql);
 
-    echo(1);
-    if($result){
-        echo(2);
-        $row = mysqli_fetch_assoc($result);
-        echo($row['name']);
-    } else {
-        echo(3);
-        echo("Vi skal oprette dig i databasen, mate");
+    if(mysqli_num_rows($result)===0){
+        $sql2 = "INSERT INTO users (login) VALUES (\"".$brugernavn."\");";
+        mysqli_query($this->link, $sql2);
     }
 
+    $result = mysqli_query($this->link, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    $bruger = array("id"=>$row['user_id'], "navn" => $row['name'], "login" => $brugernavn, "active" => $row['active'], "admin" => $row['admin']);
+
+    $token = array(
+        "iss" => "http://lmlige.dk",
+        "made" => time(),
+        "bruger" => $bruger
+    );
+
+    $jwt = JWT::encode($token, $jwtkey);
+
+    echo($jwt);
 });
-=======
->>>>>>> 9c57782d355b9f8f33a3428eb99c0260207bc625
