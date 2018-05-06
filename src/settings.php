@@ -17,10 +17,10 @@ return [
         ],
         // DB Settings
         'db' => [
-            'host'   => 'localhost',
-            'user'   => 'root',
-            'pass'   => '',
-            'dbname' => 'madklub',
+            'host'   => 'mysql56.unoeuro.com',
+            'user'   => 'lmlige_dk',
+            'pass'   => 'cnus1452',
+            'dbname' => 'lmlige_dk_db',
         ]
     ],
 ];
