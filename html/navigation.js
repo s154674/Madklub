@@ -1,12 +1,3 @@
-$(document).ready(function(){
-    $("#slider").slick({
-        arrows: false,
-        slidesToShow: 1
-    });
-});
-
-
-
 $(".menulinks a").on('click', function(){
     switch($(this).html()) {
         case "Forside":
@@ -24,9 +15,6 @@ $(".menulinks a").on('click', function(){
         case "Regler":
             loadRegler();
             break;
-        case "Login":
-            loadLogin();
-            break;
         default:
             // Noget er gået galt
     }
@@ -37,6 +25,7 @@ $(".menulinks a").on('click', function(){
 
 function loadForside(){
     $("#toggle").prop('checked', false);
+    updateForside();
     $(".content").slideUp();
     $("#forside-content").slideDown();
 
@@ -44,6 +33,7 @@ function loadForside(){
 
 function loadStatus(){
     $("#toggle").prop('checked', false);
+    updateStatus();
     $(".content").slideUp();
     $("#status-content").slideDown();
 }
@@ -64,10 +54,4 @@ function loadRegler(){
     $("#toggle").prop('checked', false);
     $(".content").slideUp();
     $("#regler-content").slideDown();
-}
-
-function loadLogin(){
-    $("#toggle").prop('checked', false);
-    $(".content").slideUp();
-    $("#login-content").slideDown();
 }

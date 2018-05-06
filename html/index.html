@@ -28,9 +28,9 @@
                     <a href="#" class="active-page">Forside</a>
                     <a href="#">Status</a>
                     <a href="#">Maddage</a>
-                    <a href="#">Profil</a>
                     <a href="#">Regler</a>
                     <a href="#">Logout</a>
+                    <a href="#"><img width="35px" src="torso.png" /></a>
                     <a class="overlay"></a>
                 </div>
             </div>
@@ -47,10 +47,10 @@
         <div class="felt">
             <h2>Information</h2>
             <div class="hvid">
-                <p class="date">Dato: [[date]]</p>
-                <p class="chef">Kok: [[chef]]</p>
-                <p class="helper">Hjælper: [[helper]]</p>
-                <p class="dish">Dagens ret: [[dish]]</p>
+                <p>Dato: <span id="date">[[date]]</span></p>
+                <p>Kok: <span id="cook">[[cook]]</span></p>
+                <p>Hjælper: <span id="help">[[help]]</span></p>
+                <p>Dagens ret: <span id="dish">[[dish]]</span></p>
             </div>
         </div>
 
@@ -169,6 +169,37 @@
     </div>
     <div id="status-content" class="content">
         <h1 class="title">Status</h1>
+        <table id="statuslist">
+            <thead>
+                <tr>
+                    <th width="50%">Navn</th>
+                    <th width="25%">Brøk</th>
+                    <th width="25%">Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Dummy</td>
+                    <td>Data</td>
+                    <td>lolz</td>
+                </tr>
+                <tr>
+                    <td>Dummy</td>
+                    <td>Data</td>
+                    <td>lolz</td>
+                </tr>
+                <tr>
+                    <td>Dummy</td>
+                    <td>Data</td>
+                    <td>lolz</td>
+                </tr>
+                <tr>
+                    <td>Dummy</td>
+                    <td>Data</td>
+                    <td>lolz</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div id="maddage-content" class="content">
         <h1 class="title">Maddage</h1>
@@ -414,6 +445,9 @@
 
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="forside.js"></script>
+    <script type="text/javascript" src="status.js"></script>
+
     <script type="text/javascript" src="navigation.js"></script>
 
     <script type="text/javascript">
