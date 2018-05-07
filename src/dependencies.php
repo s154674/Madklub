@@ -27,7 +27,7 @@ $container['logger'] = function ($c) {
 function make_token($user_id, $name, $login, $active, $admin){
     $jwtkey = "123456";
 
-    $bruger = array("id"=>  user_id, "navn" => $name, "login" => $login, "active" => $active, "admin" => $admin);
+    $bruger = array("id"=>  $user_id, "navn" => $name, "login" => $login, "active" => $active, "admin" => $admin);
 
     $token = array(
         "iss" => "http://lmlige.dk",

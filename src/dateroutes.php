@@ -80,6 +80,16 @@ $app->put('/dates/{id}/attendees/{userid}', function (Request $request, Response
     $userid = $request->getAttribute('userid');
     $body = $request->getParsedBody();
     
+
+
+    /*
+    try{
+        die_if_after('2018-02-03', '12'); //Indsæt date fra databasen og klokkeslæt den skal dø, integet imellem 0-24
+    } catch(Exception $e) {
+        return $response->withStatus(410)->write("its too late to change");
+    }
+    */
+
     $sets=array();
 
     foreach($body as $key => $value){
@@ -140,11 +150,80 @@ $app->post('/dates', function (Request $request, Response $response) {
 });
 
 
+$app->post('/dates/{id}/attendees', function (Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+    $body = $request->getParsedBody();
+    $currentuser = $request->getAttribute('bruger');
+    $userid = $currentuser['user_id'];
+
+    if (!(intval($userid)==$body['userid'] || $currentuser['admin'])) {
+        return $response
+            ->withStatus(401)
+            ->write("Could not authorize user");
+    }
+    
+    /*
+    try{
+        die_if_after('2018-02-03', '12'); //Indsæt date fra databasen og klokkeslæt den skal dø, integet imellem 0-24
+    } catch(Exception $e) {
+        return $response->withStatus(410)->write("its too late to change");
+    }
+    */
+
+    $keys=array();
+    $values=array();
+
+    foreach($body as $key => $value){
+        array_push($keys,$key);
+        array_push($values,"\"".$value."\"");
+    }
+
+    $sql = "INSERT INTO attendance ( dateid, ".join(", ",$keys).") VALUES ( ".$id.", ".join(", ",$values).");";
+
+    $updateresult = mysqli_query($this->link, $sql);
+    $sql2 = "SELECT * FROM attendance WHERE userid = ".$body['userid']." AND dateid = ".$id.";";
+
+    if(!$updateresult){
+        return $response
+            ->withStatus(500)
+            ->write("Could not post attendance");
+    }
+    $result = mysqli_query($this->link, $sql2);
+    for ($i=0;$i<mysqli_num_rows($result);$i++) {
+        echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+    }  
+
+    //return $response;
+})->add($authonly);
+
+
 //logic for DELETE endpoints
 $app->delete('/dates/{id}', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
 
     $sql = "DELETE FROM dates WHERE date_id = ".$id.";";
+    $result = mysqli_query($this->link, $sql);
+
+    if($result){
+        return $response
+            ->withStatus(204)
+            ->write("Date with id: ".$id." deleted.");
+    } else {
+        return $response
+            ->withStatus(404)
+            ->write("Date with id: ".$id." was not found.");
+    };
+    
+
+    //return $response;
+});
+
+
+$app->delete('/dates/{id}/attendees/{userid}', function (Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+    $userid = $request->getAttribute('userid');
+
+    $sql = "DELETE FROM attendance WHERE dateid = ".$id." AND userid = ".$userid.";";
     $result = mysqli_query($this->link, $sql);
 
     if($result){

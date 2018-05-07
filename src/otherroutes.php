@@ -23,7 +23,7 @@ $app->get('/{path}', function (Request $request, Response $response) {
     } else {
         return $response
             ->withStatus(500)
-            ->write("could not update user");
+            ->write("could not authorize user");
     }
 });
 
@@ -32,7 +32,6 @@ $app->post('/login', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
     $brugernavn = $body['login'];
     $password = $body['password'];
-
 
     $authenticated = false;
 
