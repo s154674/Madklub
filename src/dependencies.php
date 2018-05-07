@@ -1,4 +1,9 @@
 <?php
+use Firebase\JWT\JWT;
+use Firebase\JWT\SignatureInvalidException;
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException;
+
 // DIC configuration
 
 $container = $app->getContainer();
@@ -17,3 +22,21 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
     return $logger;
 };
+
+
+function make_token($user_id, $name, $login, $active, $admin){
+    $jwtkey = "123456";
+
+    $bruger = array("id"=>  user_id, "navn" => $name, "login" => $login, "active" => $active, "admin" => $admin);
+
+    $token = array(
+        "iss" => "http://lmlige.dk",
+        "made" => time(),
+        "exp" => time()+3600,
+        "bruger" => $bruger
+    );
+
+    $jwt = JWT::encode($token, $jwtkey);
+
+    return $jwt;
+}

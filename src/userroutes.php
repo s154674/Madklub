@@ -39,7 +39,7 @@ $app->put('/users/{id}', function (Request $request, Response $response) {
 
     
     $sql = 'UPDATE users SET '.join(", ",$sets)." WHERE user_id=".$id.";";
-    $sql2=" SELECT user_id, login, name, numerator, denominator, active, admin FROM users WHERE user_id=".$id.";";
+    $sql2= "SELECT user_id, login, name, numerator, denominator, active, admin FROM users WHERE user_id=".$id.";";
     $updateresult = mysqli_query($this->link, $sql);
     if(!$updateresult){
         return $response
@@ -60,17 +60,51 @@ $app->put('/users/{id}', function (Request $request, Response $response) {
 
 //logic for POST endpoints
 $app->post('/users', function (Request $request, Response $response) {
-    $name = $request->getAttribute('name');
-    $response->getBody()->write("Fuck, $name");
+    $body = $request->getParsedBody();
 
-    return $response;
+    $keys=array();
+    $values=array();
+
+    foreach($body as $key => $value){
+        array_push($keys,$key);
+        array_push($values,"\"".$value."\"");
+    }
+
+    $sql = "INSERT INTO users (".join(", ",$keys).") VALUES (".join(", ",$values).");";
+    $updateresult = mysqli_query($this->link, $sql);
+    $sql2 = "SELECT user_id, login, name, numerator, denominator, active, admin FROM users ORDER BY user_id DESC LIMIT 0, 1;";
+
+    if(!$updateresult){
+        return $response
+            ->withStatus(500)
+            ->write("could not post user");
+    }
+    $result = mysqli_query($this->link, $sql2);
+    for ($i=0;$i<mysqli_num_rows($result);$i++) {
+        echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+    }  
+
+    //return $response;
 });
 
 
 //logic for DELETE endpoints
-$app->delete('/users/{name}', function (Request $request, Response $response) {
-    $name = $request->getAttribute('name');
-    $response->getBody()->write("Fuck, $name");
+$app->delete('/users/{id}', function (Request $request, Response $response) {
+    $id = $request->getAttribute('id');
 
-    return $response;
+    $sql = "DELETE FROM users WHERE user_id = ".$id.";";
+    $result = mysqli_query($this->link, $sql);
+
+    if($result){
+        return $response
+            ->withStatus(204)
+            ->write("User with id: ".$id." deleted.");
+    } else {
+        return $response
+            ->withStatus(404)
+            ->write("User with id: ".$id." was not found.");
+    };
+    
+
+    //return $response;
 });

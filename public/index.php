@@ -1,4 +1,10 @@
 <?php
+include "firebase_jwt/JWT.php";
+include "firebase_jwt/SignatureInvalidException.php";
+include "firebase_jwt/ExpiredException.php";
+include "firebase_jwt/BeforeValidException.php";
+
+
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
