@@ -25,7 +25,7 @@ $app->get('/{path}', function (Request $request, Response $response) {
             ->withStatus(500)
             ->write("could not update user");
     }
-})
+});
 
 // Log ind
 $app->post('/login', function (Request $request, Response $response) {

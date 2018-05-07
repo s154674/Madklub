@@ -40,3 +40,16 @@ function make_token($user_id, $name, $login, $active, $admin){
 
     return $jwt;
 }
+
+
+// $date = YYYY-mm-dd   eks: 2018-05-07
+// $time = tt           eks: 17
+function die_if_after($date, $time){
+    $datetime = date_create_from_format('Y-m-d:G', $date.":".$time);
+    $now = new DateTime();
+
+    if ($now<$datetime){
+        $error = 'Time is exceeded';
+        throw new Exception($error);
+    }
+}
