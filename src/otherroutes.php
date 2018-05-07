@@ -47,7 +47,7 @@ $app->post('/login', function (Request $request, Response $response) {
         $authenticated = false;
         return $response
             ->withStatus(401)
-            ->write("could not authorize user");
+            ->write("Could not authorize user".$brugernavn.$password);
     }
 
     $sql = "SELECT * FROM users WHERE login=\"".$brugernavn."\" LIMIT 1;";
