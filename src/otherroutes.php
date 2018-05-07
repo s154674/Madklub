@@ -2,13 +2,11 @@
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Firebase\JWT\JWT;
-use Firebase\JWT\SignatureInvalidException;
-use Firebase\JWT\BeforeValidException;
-use Firebase\JWT\ExpiredException;
 
 
 /*  $this->logger->addInfo('Something interesting happened'); */
+
+
 
 // Routes
 //logic for GET endpoints (e.g. frontpage)
@@ -27,13 +25,10 @@ $app->get('/{path}', function (Request $request, Response $response) {
             ->withStatus(500)
             ->write("could not update user");
     }
-})->add($authonly);
-
-
+})
 
 // Log ind
 $app->post('/login', function (Request $request, Response $response) {
-    $jwtkey = "123456";
     $body = $request->getParsedBody();
     $brugernavn = $body['login'];
     $password = $body['password'];
@@ -67,15 +62,7 @@ $app->post('/login', function (Request $request, Response $response) {
     $result = mysqli_query($this->link, $sql);
     $row = mysqli_fetch_assoc($result);
 
-    $bruger = array("id"=>$row['user_id'], "navn" => $row['name'], "login" => $brugernavn, "active" => $row['active'], "admin" => $row['admin']);
 
-    $token = array(
-        "iss" => "http://lmlige.dk",
-        "made" => time(),
-        "bruger" => $bruger
-    );
-
-    $jwt = JWT::encode($token, $jwtkey);
-
+    $jwt = make_token($row['user_id'], $row['name'], $brugernavn, $row['active'], $row['admin']);
     echo($jwt);
 });
