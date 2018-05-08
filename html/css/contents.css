@@ -19,20 +19,18 @@
 
 }
 
-#content-maddage table button {
+#content-maddage table tbody button {
     display: block;
     margin: auto;
     width: 100%;
     border: 0;
 }
-
-#content-maddage table button.attend {
-    display: none;
+#content-maddage table tbody tr {
+    cursor: pointer;
 }
 
-
-#content-maddage table tr td:first-child {
-    padding: 0;
+#content-maddage table tbody button.attend {
+    display: none;
 }
 
 button.radius, .button.radius {
