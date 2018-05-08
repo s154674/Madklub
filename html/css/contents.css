@@ -31,6 +31,9 @@
 }
 
 
+#content-maddage table tr td:first-child {
+    padding: 0;
+}
 
 button.radius, .button.radius {
     border-radius: 3px; }
