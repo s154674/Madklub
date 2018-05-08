@@ -25,13 +25,26 @@
     width: 100%;
     border: 0;
 }
+
+#content-maddage table tbody tr td img {
+    height: 32px;
+}
+#content-maddage table tbody tr td .dropdown-pane  {
+    width: 230px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+#content-maddage table tbody tr td .menu li {
+    text-align: center;
+}
+
+
 #content-maddage table tbody tr {
     cursor: pointer;
 }
 
-#content-maddage table tbody button.attend {
-    display: none;
-}
 
 button.radius, .button.radius {
     border-radius: 3px; }
