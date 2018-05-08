@@ -97,7 +97,7 @@
                     </div>
 
                     <div id="content-status" class="cell callout content">
-                        <table class="hover">
+                        <table class="hover unstriped">
                             <thead>
                             <tr>
                                 <th width="50%">Navn</th>
@@ -131,14 +131,13 @@
                     </div>
 
                     <div id="content-maddage" class="cell callout content">
-                        <table id="maddagList" class="hover">
+                        <table id="maddagList" class="hover unstriped">
                             <thead>
                             <tr>
                                 <th width="15%">Dato</th>
-                                <th width="30%">Kok</th>
-                                <th width="30%">Ret</th>
+                                <th width="35%">Kok</th>
+                                <th width="35%">Ret</th>
                                 <th width="15%">Tilmelding</th>
-                                <th width="10%"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -147,32 +146,22 @@
                                 <td>Gordon Ramsey</td>
                                 <td>Burger</td>
                                 <td>
-                                    <button class="attend success button">Tilmeld</button>
-                                    <button class="disattend alert button">Afmeld</button>
-                                </td>
-                                <td>
-                                    <a href="#" class="plus"><img src="logos/pressed.png" height="20" width="20"> </a>
-                                    <a href="#" class="late">LATE</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Imorgen</td>
-                                <td>Gordon Ramsey</td>
-                                <td>Burger</td>
-                                <td>
-                                    <button class="alert button">Kommer ikke</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Imorgen</td>
-                                <td>Gordon Ramsey</td>
-                                <td>Burger</td>
-                                <td>
-                                    <button class="warning button">Forsinket</button>
-                                </td>
-                                <td>
-                                    <a href="#" class="plus"><img src="logos/pressed.png" height="20" width="20"> </a>
-                                    <a href="#" class="late">LATE</a>
+                                    <img src="logos/pressed.png" data-toggle="example-dropdown-top-center">
+                                    <div class="dropdown-pane" data-position="top" data-alignment="center" id="example-dropdown-top-center" data-dropdown data-auto-focus="true">
+                                        <div class="grid-container">
+                                            <div class="grid-x grid-margin-x">
+                                                <div class="cell small-12">
+                                                    <ul class="menu expanded">
+                                                        <li><img src="logos/pressed.png"></li>
+                                                        <li><img src="logos/pressed.png"></li>
+                                                        <li><img src="logos/pressed.png"></li>
+                                                        <li><img src="logos/pressed.png"></li>
+                                                        <li><img src="logos/pressed.png"></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -180,11 +169,23 @@
                                 <td>Gordon Ramsey</td>
                                 <td>Burger</td>
                                 <td>
-                                    <button class="button">Gæst</button>
+
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>Imorgen</td>
+                                <td>Gordon Ramsey</td>
+                                <td>Burger</td>
                                 <td>
-                                    <a href="#" class="plus"><img src="logos/pressed.png" height="20" width="20"> </a>
-                                    <a href="#" class="late">LATE</a>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Imorgen</td>
+                                <td>Gordon Ramsey</td>
+                                <td>Burger</td>
+                                <td>
+
                                 </td>
                             </tr>
                             </tbody>
