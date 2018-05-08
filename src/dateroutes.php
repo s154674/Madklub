@@ -18,7 +18,7 @@ $app->get('/dates/{id}', function (Request $request, Response $response) {
             echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
         }
     }           
-});
+})->add($authonly);
 
 $app->get('/dates/{id}/attendees', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
@@ -42,6 +42,22 @@ $app->put('/dates/{id}', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $body = $request->getParsedBody();
     
+
+    $sql = 'SELECT cook FROM dates WHERE date_id='.$id.';';
+    $result = mysqli_query($this->link, $sql);
+    $cookstuff = mysqli_fetch_assoc($result);
+    $cook = $cookstuff["cook"];
+ 
+
+    $currentuser = $request->getAttribute('bruger');
+    $jwtuserid = $currentuser['user_id'];
+
+    if (!(intval($jwtuserid)==$cook || $currentuser['admin'])) {
+        return $response
+            ->withStatus(401)
+            ->write("Could not authorize user");
+    }
+
     $sets=array();
 
     foreach($body as $key => $value){
@@ -71,8 +87,7 @@ $app->put('/dates/{id}', function (Request $request, Response $response) {
     
 
     //return $response;
-});
-
+})->add($authonly);
 
 //logic for PUT endpoints 
 $app->put('/dates/{id}/attendees/{userid}', function (Request $request, Response $response) {
@@ -80,7 +95,14 @@ $app->put('/dates/{id}/attendees/{userid}', function (Request $request, Response
     $userid = $request->getAttribute('userid');
     $body = $request->getParsedBody();
     
+    $currentuser = $request->getAttribute('bruger');
+    $jwtuserid = $currentuser['user_id'];
 
+    if (!(intval($jwtuserid)==$userid || $currentuser['admin'])) {
+        return $response
+            ->withStatus(401)
+            ->write("Could not authorize user");
+    }
 
     /*
     try{
@@ -118,7 +140,7 @@ $app->put('/dates/{id}/attendees/{userid}', function (Request $request, Response
     
 
     //return $response;
-});
+})->add($authonly);
 
 //logic for POST endpoints
 $app->post('/dates', function (Request $request, Response $response) {
@@ -147,7 +169,7 @@ $app->post('/dates', function (Request $request, Response $response) {
     }  
 
     //return $response;
-});
+})->add($authonly)->add($adminonly);
 
 
 $app->post('/dates/{id}/attendees', function (Request $request, Response $response) {
@@ -216,12 +238,21 @@ $app->delete('/dates/{id}', function (Request $request, Response $response) {
     
 
     //return $response;
-});
+})->add($authonly)->add($adminonly);
 
 
 $app->delete('/dates/{id}/attendees/{userid}', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $userid = $request->getAttribute('userid');
+
+    $currentuser = $request->getAttribute('bruger');
+    $jwtuserid = $currentuser['user_id'];
+
+    if (!(intval($jwtuserid)==$userid || $currentuser['admin'])) {
+        return $response
+            ->withStatus(401)
+            ->write("Could not authorize user");
+    }
 
     $sql = "DELETE FROM attendance WHERE dateid = ".$id." AND userid = ".$userid.";";
     $result = mysqli_query($this->link, $sql);
@@ -238,4 +269,4 @@ $app->delete('/dates/{id}/attendees/{userid}', function (Request $request, Respo
     
 
     //return $response;
-});
+})->add($authonly);
