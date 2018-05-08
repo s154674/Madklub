@@ -15,7 +15,7 @@ $app->get('/futuredates', function (Request $request, Response $response) {
     $currentuser = $request->getAttribute('bruger');
     $currentuserid = $currentuser['user_id'];
 
-    $sql = "SELECT date, cook, cookjoin.name AS cookname, help, helpjoin.name AS helpname, dish, attendance.dateid IS NOT NULL AS attending , attendance.late, attendance.guest FROM dates JOIN users AS cookjoin ON dates.cook=cookjoin.user_id JOIN users AS helpjoin ON dates.help=helpjoin.user_id LEFT JOIN attendance ON dates.date_id = attendance.dateid AND ".$currentuserid." = attendance.userid WHERE dates.date >= CURRENT_DATE() ORDER BY dates.date ASC;";
+    $sql = "SELECT date_id, date, cook, cookjoin.name AS cookname, help, helpjoin.name AS helpname, dish, attendance.dateid IS NOT NULL AS attending , attendance.late, attendance.guest FROM dates JOIN users AS cookjoin ON dates.cook=cookjoin.user_id JOIN users AS helpjoin ON dates.help=helpjoin.user_id LEFT JOIN attendance ON dates.date_id = attendance.dateid AND ".$currentuserid." = attendance.userid WHERE dates.date >= CURRENT_DATE() ORDER BY dates.date ASC;";
     $result = mysqli_query($this->link, $sql);
     echo '[';
     for ($i=0;$i<mysqli_num_rows($result);$i++) {
