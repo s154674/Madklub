@@ -81,9 +81,9 @@
                         <div class="callout secondary">
                             <h2>Folk der kommer</h2>
                             <div class="expanded button-group">
-                                <a class="button">TIL MAD<br/><span>[[x1]]</span></a>
-                                <a class="button secondary">TIL BORDS<br/><span>[[x2]]</span></a>
-                                <a class="button secondary">PÅ SENERE<br/><span>[[x3]]</span></a>
+                                <a class="button ">TIL MAD<br/><span>[[x1]]</span></a>
+                                <a class="button secondary ">TIL BORDS<br/><span>[[x2]]</span></a>
+                                <a class="button secondary ">PÅ SENERE<br/><span>[[x3]]</span></a>
                             </div>
                             <div class="callout primary">
                                 <ul>
@@ -131,47 +131,53 @@
                     </div>
 
                     <div id="content-maddage" class="cell callout content">
-                        <table id="maddagList" class="hover">
+                        <table id="maddagList" class="hover stack">
                             <thead>
                             <tr>
-                                <th width="15%">Tilmelding</th>
                                 <th width="15%">Dato</th>
-                                <th width="35%">Kok</th>
-                                <th width="35%">Ret</th>
+                                <th width="30%">Kok</th>
+                                <th width="30%">Ret</th>
+                                <th width="15%">Tilmelding</th>
+                                <th width="10%"></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td>
-                                    <button class="success button">Kommer</button>
-                                </td>
                                 <td>Imorgen</td>
                                 <td>Gordon Ramsey</td>
                                 <td>Burger</td>
+                                <td>
+                                    <button class="attend success button">Tilmeld</button>
+                                    <button class="disattend alert button">Afmeld</button>
+                                </td>
+                                <td>
+                                    <a href="#">+1</a>
+                                    <a href="#">LATE</a>
+                                </td>
                             </tr>
                             <tr>
+                                <td>Imorgen</td>
+                                <td>Gordon Ramsey</td>
+                                <td>Burger</td>
                                 <td>
                                     <button class="alert button">Kommer ikke</button>
                                 </td>
+                            </tr>
+                            <tr>
                                 <td>Imorgen</td>
                                 <td>Gordon Ramsey</td>
                                 <td>Burger</td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <button class="warning button">Forsinket</button>
                                 </td>
+                            </tr>
+                            <tr>
                                 <td>Imorgen</td>
                                 <td>Gordon Ramsey</td>
                                 <td>Burger</td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <button class="button">Gæst</button>
                                 </td>
-                                <td>Imorgen</td>
-                                <td>Gordon Ramsey</td>
-                                <td>Burger</td>
                             </tr>
                             </tbody>
                         </table>
@@ -200,7 +206,7 @@
                             </label>
                             <p id="wrongtext-logind" style="font-size:12px; line-height:15px; color:red; display: none; text-align:center;">Desværre, prøv igen</p>
                             <p id="notext-logind" style="line-height:15px;">&nbsp;</p>
-                            <p><input type="submit" class="button expanded" value="Log ind"></input></p>
+                            <p><input type="submit" class="button radius expanded" value="Log ind"></input></p>
                         </form>
                     </div>
                 </div>

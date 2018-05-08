@@ -41,7 +41,6 @@ function make_token($user_id, $name, $login, $active, $admin){
     return $jwt;
 }
 
-
 // $date = YYYY-mm-dd   eks: 2018-05-07
 // $time = tt           eks: 17
 function die_if_after($date, $time){

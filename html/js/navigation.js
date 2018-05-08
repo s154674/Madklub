@@ -186,7 +186,7 @@ function navigateToLogud(){
     $("#content-logind").addClass("current").slideDown();
     $("#offCanvas").foundation('close');
     //
-    localStorage.setItem("jwt", null);
+    localStorage.removeItem("jwt");
     reloadRelevant();
 }
 $("#offmenu-logud").click(navigateToLogud);
