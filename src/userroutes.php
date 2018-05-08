@@ -8,6 +8,16 @@ use Slim\Http\Response;
 
 $app->get('/users/{id}', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
+
+    $currentuser = $request->getAttribute('bruger');
+    $jwtuserid = $currentuser['user_id'];
+
+    if (!(intval($jwtuserid)==$id || $currentuser['admin'])) {
+        return $response
+            ->withStatus(401)
+            ->write("Could not authorize user");
+    }
+
     $sql = " SELECT user_id, login, name, numerator, denominator, active, admin FROM users WHERE user_id=".$id.";";
     $result = mysqli_query($this->link, $sql);
     if(!$result){
@@ -19,12 +29,21 @@ $app->get('/users/{id}', function (Request $request, Response $response) {
             echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
         } 
     }
-});
+})->add($authonly);
 
 //logic for PUT endpoints 
 $app->put('/users/{id}', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $body = $request->getParsedBody();
+
+    $currentuser = $request->getAttribute('bruger');
+    $jwtuserid = $currentuser['user_id'];
+
+    if (!(intval($jwtuserid)==$id || $currentuser['admin'])) {
+        return $response
+            ->withStatus(401)
+            ->write("Could not authorize user");
+    }
     
     $sets=array();
 
@@ -55,7 +74,7 @@ $app->put('/users/{id}', function (Request $request, Response $response) {
     
 
     //return $response;
-});
+})->add($authonly);
 
 
 //logic for POST endpoints
@@ -85,7 +104,7 @@ $app->post('/users', function (Request $request, Response $response) {
     }  
 
     //return $response;
-});
+})->add($authonly)->add($adminonly);
 
 
 //logic for DELETE endpoints
@@ -107,4 +126,4 @@ $app->delete('/users/{id}', function (Request $request, Response $response) {
     
 
     //return $response;
-});
+})->add($authonly)->add($adminonly);
