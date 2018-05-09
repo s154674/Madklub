@@ -112,19 +112,19 @@ $app->put('/dates/{id}/attendees/{userid}', function (Request $request, Response
     }
     */
 
-    $sets=array();
+    $keys=array();
+    $vals=array();
 
     foreach($body as $key => $value){
         if(is_string($value)){
-            $s=$key."=\"".$value."\"";
-        } else {
-            $s=$key."=".$value;
+            $value = "'".$value."'";
         }
-        array_push($sets, $s);
+        array_push($keys, $key);
+        array_push($vals, $value);
     }
 
-    $sql = 'UPDATE attendance SET '.join(", ",$sets)." WHERE userid=".$userid." AND dateid=".$id.";";
-    $sql2=" SELECT * FROM attendance WHERE userid=".$userid." AND dateid=".$id.";";
+    $sql = "REPLACE INTO attendance ( userid, dateid, ".join(", ",$keys).") VALUES ( ".$userid.", ".$id.", ".join(", ",$vals).");";
+    $sql2= "SELECT * FROM attendance WHERE userid=".$userid." AND dateid=".$id.";";
     $updateresult = mysqli_query($this->link, $sql);
     if(!$updateresult){
         return $response
