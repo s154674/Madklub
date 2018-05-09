@@ -41,7 +41,16 @@
 #content-maddage table tbody tr {
     cursor: pointer;
 }
-
+#se-maddag select:disabled {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    background-origin: unset;
+    border:0;
+    cursor: default;
+    background-color:transparent;
+}
 
 #content-status table tbody tr {
     cursor: pointer;
@@ -52,10 +61,3 @@ button.radius, .button.radius {
 button.round, .button.round {
     border-radius: 1000px; }
 
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-indent: 1px;
-    text-overflow: '';
-    background-origin: unset;
-}
