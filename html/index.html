@@ -191,7 +191,73 @@
                             </tr>
                             </tbody>
                         </table>
+
+                        <p><button class="button" data-open="se-maddag">Click me for a modal</button></p>
+
+                        <!-- This is the first modal -->
+                        <div class="reveal large" id="se-maddag" data-reveal>
+                            <div class="grid-container">
+                                <div class="grid-x grid-margin-x">
+                                    <div class="cell medium-3">
+                                        <i class="fi-pencil"></i>
+                                    </div>
+                                    <div class="cell medium-offset-1 medium-4">
+                                        <h1 id="dato-se-maddag" class="text-center">Imorgen</h1>
+                                    </div>
+                                    <div class="cell medium-offset-1 medium-3">
+                                        <button class="button alert expanded" data-open="luk-maddag">Luk maddag</button>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-margin-x">
+                                    <div class="cell small-12 medium-4 medium-offset-1 large-3 large-offset-2">
+                                        <label>Kok:
+                                            <select>
+                                                <option value="showboat">Fie Laursen</option>
+                                                <option value="redwing">Redwing</option>
+                                                <option value="narcho">Narcho</option>
+                                                <option value="hardball">Hardball</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="cell small-12 medium-offset-2 medium-4 large-3">
+                                        <label>Ret:
+                                            <input type="text" value="Bacon Cheese Burger">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-margin-x">
+                                    <div class="cell medium-6">
+                                        <div class="callout primary">
+                                            <label>Hjælper:
+                                                <select>
+                                                    <option value="showboat">Justin Bieber</option>
+                                                    <option value="redwing">Redwing</option>
+                                                    <option value="narcho">Narcho</option>
+                                                    <option value="hardball">Hardball</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="cell medium-6">
+                                        <div class="callout primary">
+                                            Hallo
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <p class="lead text-center"></p>
+                        </div>
+
+                        <!-- This is the nested modal -->
+                        <div class="reveal medium" id="luk-maddag" data-reveal>
+                            <h2>ANOTHER MODAL!!!</h2>
+                            <button class="close-button" data-close aria-label="Close reveal" type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                     </div>
+
 
                     <div id="content-regler" class="cell callout content">
                         <h1>Regler</h1>
@@ -222,7 +288,6 @@
                 </div>
             </div>
         </div>
-
 
 
 
