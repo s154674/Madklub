@@ -52,6 +52,14 @@
     background-color:transparent;
 }
 
+#se-maddag ul.tabs {
+    background-color:transparent;
+}
+
+#se-maddag ul.tabs li {
+    background-color:#e2525c;
+}
+
 #content-status table tbody tr {
     cursor: pointer;
 }
