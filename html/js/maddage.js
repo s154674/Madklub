@@ -5,10 +5,8 @@ function initMaddage(){
         url: "public/futuredates",
         method: "GET",
         contentType: 'application/json',
+        dataType: 'json',
         success: function(data, textStatus, jqXhr){
-            console.log(data);
-            data = JSON.parse(data);
-
             datetabledata = $("#content-maddage table tbody");
             datetabledata.empty();
             $.each(data, function(i, maddag) {
@@ -16,7 +14,6 @@ function initMaddage(){
                 maddag['late'] = maddag['late']==="1";
                 maddag['guest'] = maddag['guest']==="1";
 
-                console.log(maddag);
                 cell1 = "<td>" + maddag['date'] + "</td>";
                 cell2 = "<td>" + maddag['cookname'] + "</td>";
                 cell3 = "<td>" + maddag['dish'] + "</td>";
@@ -32,12 +29,11 @@ function initMaddage(){
                 } else if (maddag['attending']) {
                     img = "greencheck";
                 }
-                console.log(img);
                 currentimg = "<img class='current' src='logos/"+img+".png' data-toggle='drop-"+maddag['date_id']+"'>";   // current status
 
                 logo1 = "<li data-id='"+maddag['date_id']+"' class='attend'><img src='logos/greencheck.png'></li>";
-                logo2 = "<li data-id='"+maddag['date_id']+"'class='late'><img src='logos/yellowcheck.png'></li>";
-                logo3 = "<li data-id='"+maddag['date_id']+"' class='guest'><img src='logos/greenplus1.png'></li>";
+                logo2 = "<li data-id='"+maddag['date_id']+"' class='guest'><img src='logos/greenplus1.png'></li>";
+                logo3 = "<li data-id='"+maddag['date_id']+"'class='late'><img src='logos/yellowcheck.png'></li>";
                 logo4 = "<li data-id='"+maddag['date_id']+"' class='lateguest'><img src='logos/yellowplus1.png'></li>";
                 logo5 = "<li data-id='"+maddag['date_id']+"' class='disatend'><img src='logos/noee.png'></li>";
                 menu = "<ul class='menu expanded'>"+logo1+logo2+logo3+logo4+logo5+"</ul>";
@@ -51,7 +47,11 @@ function initMaddage(){
                 datetabledata.append(row);
                 new Foundation.Dropdown($("#drop-"+maddag['date_id']));
 
-
+                $("#content-maddage table tbody tr .dropdown-pane").on("show.zf.dropdown", function() {
+                    var dropdown = $(this);
+                    dropdown.css('display', 'none');
+                    dropdown.fadeIn('fast');
+                });
             });
 
             $("#content-maddage table tbody tr .dropdown-pane li").click(function(){
@@ -77,38 +77,148 @@ function initMaddage(){
                 }
             });
 
-            console.log(data);
+            localStorage.setItem("jwt", jqXhr.getResponseHeader('Authorization').substring(7));
         },
         error: function(data, textStatus, jqXhr){
+            console.log(textStatus);
             console.log(data);
+            localStorage.removeItem("jwt");
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
         },
         complete: function(jqXhr, textStatus){
-            localStorage.setItem("jwt", jqXhr.getResponseHeader('Authorization').substring(7));
             reloadRelevant();
         }
     });
 }
 
 function attend(id){
-    $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/greencheck.png");
-    console.log("Der blev trykket på en knap");
+    myuserid = jwt_decode(localStorage.getItem('jwt')).bruger.id;
+
+    $.ajax({
+        url: "public/dates/"+id+"/attendees/"+myuserid,
+        method: "PUT",
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({late: 0, guest:0}),
+        success: function(data, textStatus, jqXhr){
+            console.log("attended");
+            $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/greencheck.png");
+        },
+        error: function(data, textStatus, jqXhr){
+            console.log(textStatus);
+            console.log(data);
+            //localStorage.removeItem("jwt");
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function(jqXhr, textStatus){
+            //reloadRelevant();
+        }
+    });
 }
 function late(id){
-    $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/yellowcheck.png");
-    console.log("Der blev trykket på en knap");
+    myuserid = jwt_decode(localStorage.getItem('jwt')).bruger.id;
+
+    $.ajax({
+        url: "public/dates/"+id+"/attendees/"+myuserid,
+        method: "PUT",
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({late: 1, guest:0}),
+        success: function(data, textStatus, jqXhr){
+            console.log("latered");
+            $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/yellowcheck.png");
+        },
+        error: function(data, textStatus, jqXhr){
+            console.log(textStatus);
+            console.log(data);
+            //localStorage.removeItem("jwt");
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function(jqXhr, textStatus){
+            //reloadRelevant();
+        }
+    });
 }
 function guest(id){
-    $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/greenplus1.png");
-    console.log("Der blev trykket på en knap");
+    myuserid = jwt_decode(localStorage.getItem('jwt')).bruger.id;
+
+    $.ajax({
+        url: "public/dates/"+id+"/attendees/"+myuserid,
+        method: "PUT",
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({late: 0, guest:1}),
+        success: function(data, textStatus, jqXhr){
+            console.log("guested");
+            $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/greenplus1.png");
+        },
+        error: function(data, textStatus, jqXhr){
+            console.log(textStatus);
+            console.log(data);
+            //localStorage.removeItem("jwt");
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function(jqXhr, textStatus){
+            //reloadRelevant();
+        }
+    });
 }
 function lateguest(id){
-    $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/yellowplus1.png");
-    console.log("Der blev trykket på en knap");
+    myuserid = jwt_decode(localStorage.getItem('jwt')).bruger.id;
+
+    $.ajax({
+        url: "public/dates/"+id+"/attendees/"+myuserid,
+        method: "PUT",
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({late: 1, guest:1}),
+        success: function(data, textStatus, jqXhr){
+            console.log("laterguested");
+            $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/yellowplus1.png");
+        },
+        error: function(data, textStatus, jqXhr){
+            console.log(textStatus);
+            console.log(data);
+            //localStorage.removeItem("jwt");
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function(jqXhr, textStatus){
+            //reloadRelevant();
+        }
+    });
 }
 function disattend(id){
-    $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/noee.png");
-    console.log("Der blev trykket på en knap");
+    myuserid = jwt_decode(localStorage.getItem('jwt')).bruger.id;
+
+    $.ajax({
+        url: "public/dates/"+id+"/attendees/"+myuserid,
+        method: "DELETE",
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data, textStatus, jqXhr){
+            console.log("disattended");
+            $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/noee.png");
+        },
+        error: function(data, textStatus, jqXhr){
+            console.log(textStatus);
+            console.log(data);
+            //localStorage.removeItem("jwt");
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function(jqXhr, textStatus){
+            //reloadRelevant();
+        }
+    });
 }

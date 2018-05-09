@@ -30,6 +30,7 @@ function reloadRelevant() {
         $("#menu-profil").hide();  $("#offmenu-profil").hide();
         $("#menu-logud").hide();   $("#offmenu-logud").hide();
         $("#menu-logind").show();  $("#offmenu-logind").show();
+        navigateToLogind();
     }
 }
 

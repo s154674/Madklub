@@ -18,7 +18,6 @@ $("#content-logind form").on('submit', function(e){
         data: JSON.stringify(payload),
         success: function(data, textStatus, jqXhr){
             localStorage.setItem("jwt", data);
-            reloadRelevant();
             navigateToForside();
 
             $("#wrongtext-logind").hide();
@@ -29,7 +28,7 @@ $("#content-logind form").on('submit', function(e){
             $("#notext-logind").slideUp();
         },
         complete: function(){
-
+            reloadRelevant();
         }
     });
 
