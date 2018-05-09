@@ -51,3 +51,11 @@ button.radius, .button.radius {
     border-radius: 3px; }
 button.round, .button.round {
     border-radius: 1000px; }
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    background-origin: unset;
+}
