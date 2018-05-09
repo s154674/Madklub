@@ -54,6 +54,43 @@ function initMaddage(){
                 });
             });
 
+            $("#content-maddage table tbody tr td:not(:last-child)").click(function(){
+                datoid = $(this).parent("tr").data("id");
+                $.ajax({
+                    url: "public/dates/"+datoid,
+                    method: "GET",
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function(data, textStatus, jqXhr){
+                        // attendance-se-maddag
+                        // dato-se-maddag
+                        // cook-se-maddag
+                        // dish-se-maddag
+                        // help-se-maddag
+
+                        console.log(data);
+
+                        $("#dato-se-maddag").html(data.date);
+                        $("#cook-se-maddag").val(data.cook);
+                        $("#dish-se-maddag").val(data.dish);
+                        $("#help-se-maddag").val(data.help);
+
+                    },
+                    error: function(data, textStatus, jqXhr){
+
+                    },
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+                    },
+                    complete: function(jqXhr, textStatus) {
+                        reloadRelevant();
+                    }
+                });
+
+                $('#se-maddag').foundation('open');
+
+            });
+
             $("#content-maddage table tbody tr .dropdown-pane li").click(function(){
                 $(this).parent("ul").parent("div").parent("div").parent("div").parent(".dropdown-pane").foundation('close');
                 id = $(this).data('id');

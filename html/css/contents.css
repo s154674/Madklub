@@ -41,7 +41,19 @@
 #content-maddage table tbody tr {
     cursor: pointer;
 }
-#se-maddag select:disabled {
+
+#se-maddag #attendance-se-maddag {
+    height:25px;
+}
+
+#se-maddag input[type='text'], #se-maddag select {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+    height: auto;
+}
+
+#se-maddag input[type='text']:disabled, #se-maddag select:disabled {
     -webkit-appearance: none;
     -moz-appearance: none;
     text-indent: 1px;
@@ -50,6 +62,7 @@
     border:0;
     cursor: default;
     background-color:transparent;
+    box-shadow:none;
 }
 
 #se-maddag ul.tabs {
@@ -57,9 +70,6 @@
     border: none;
 }
 
-#se-maddag .tabs-content {
-    border: 0;
-}
 
 #se-maddag ul.tabs li {
     background-color:#e6e6e6;
@@ -78,6 +88,20 @@
     color: #000000;
     outline: none;
 }
+
+
+#se-maddag .tabs-content {
+    border: 0;
+}
+
+#se-maddag .tabs-panel {
+    padding: 0;
+}
+
+#se-maddag .tabs-panel table {
+    margin: 0;
+}
+
 
 #content-status table tbody tr {
     cursor: pointer;
