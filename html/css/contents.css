@@ -42,6 +42,11 @@
     cursor: pointer;
 }
 
+#se-maddag #dato-se-maddag{
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+}
+
 #se-maddag #attendance-se-maddag {
     height:25px;
 }
@@ -100,6 +105,11 @@
 
 #se-maddag .tabs-panel table {
     margin: 0;
+}
+
+
+#se-maddag .tabs-panel table tbody {
+    border-top:0;
 }
 
 

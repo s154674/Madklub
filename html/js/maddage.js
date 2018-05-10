@@ -1,3 +1,5 @@
+users = [];
+
 function initMaddage(){
     console.log("Maddage blev åbnet");
 
@@ -56,6 +58,7 @@ function initMaddage(){
 
             $("#content-maddage table tbody tr td:not(:last-child)").click(function(){
                 datoid = $(this).parent("tr").data("id");
+                $("#maddagform-se-maddag").data("id", datoid);
                 $.ajax({
                     url: "public/dates/"+datoid,
                     method: "GET",
@@ -64,6 +67,7 @@ function initMaddage(){
                     success: function(data, textStatus, jqXhr){
                         // attendance-se-maddag
                         // dato-se-maddag
+                        // luk-se-maddag
                         // cook-se-maddag
                         // dish-se-maddag
                         // help-se-maddag
@@ -75,6 +79,35 @@ function initMaddage(){
                         $("#dish-se-maddag").val(data.dish);
                         $("#help-se-maddag").val(data.help);
 
+
+                        try {
+                            decoded = jwt_decode(localStorage.getItem("jwt"));
+
+                            $("#cook-se-maddag").attr("disabled", true);
+                            $("#help-se-maddag").attr("disabled", true);
+                            $("#dish-se-maddag").attr("disabled", true);
+                            $("#attendance-se-maddag").show();
+                            $("#luk-se-maddag").hide();
+
+                            if (decoded.bruger.admin==="1") {
+                                // ADMIN
+                                $("#cook-se-maddag").attr("disabled", false);
+                                $("#help-se-maddag").attr("disabled", false);
+                                $("#dish-se-maddag").attr("disabled", false);
+                                $("#attendance-se-maddag").show();
+                                $("#luk-se-maddag").show();
+                            }
+
+                            if (decoded.bruger.id===data.cook){
+                                $("#dish-se-maddag").attr("disabled", false);
+                                $("#attendance-se-maddag").hide();
+                                $("#luk-se-maddag").show();
+                            }
+
+                        } catch(err) {
+                            // IKKE LOGGET IND
+
+                        }
                     },
                     error: function(data, textStatus, jqXhr){
 
@@ -87,6 +120,57 @@ function initMaddage(){
                     }
                 });
 
+                $.ajax({
+                    url: "public/dates/"+datoid+"/attendees",
+                    method: "GET",
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function(data, textStatus, jqXhr){
+
+                        eatertable = $("#eaters table tbody");
+                        latertable = $("#laters table tbody");
+
+                        eatertable.empty();
+                        latertable.empty();
+
+                        countfortable = 0;
+                        $.each(data, function(i, attendance){
+                            user = users.find(function(user){
+                                return user.user_id === attendance.userid;
+                            });
+
+                            text = user.name;
+
+                            if (attendance.guest==="1") {
+                                text += " + gæst";
+                                countfortable+=2;
+                            } else {
+                                countfortable+=1;
+                            }
+
+                            row = "<tr><td>"+text+"</td></tr>";
+
+                            if (attendance.late==="1"){
+                                latertable.append(row);
+                            } else {
+                                eatertable.append(row);
+                            }
+                        });
+
+                        $("#count-se-maddag").val(countfortable);
+                    },
+                    error: function (data, textStatus, jqXhr) {
+                        console.log(textStatus);
+                        console.log(data);
+                        localStorage.removeItem("jwt");
+                    },
+                    beforeSend: function (xhr, settings) {
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem("jwt"));
+                    },
+                    complete: function (jqXhr, textStatus) {
+                        reloadRelevant();
+                    }
+                });
                 $('#se-maddag').foundation('open');
 
             });
@@ -128,6 +212,57 @@ function initMaddage(){
             reloadRelevant();
         }
     });
+
+
+
+    $.ajax({
+        url: "public/users",
+        method: "GET",
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data, textStatus, jqXhr){
+            users = data;
+            select1 = $("#cook-se-maddag");
+            select2 = $("#help-se-maddag");
+            select1.empty();
+            select2.empty();
+            $.each(data, function(i, user) {
+                select1.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
+                select2.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
+            });
+        },
+        error: function (data, textStatus, jqXhr) {
+            console.log(textStatus);
+            console.log(data);
+            localStorage.removeItem("jwt");
+        },
+        beforeSend: function (xhr, settings) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function (jqXhr, textStatus) {
+            reloadRelevant();
+        }
+    });
+
+}
+
+function reloardRelevantMaddage() {
+    try {
+        decoded = jwt_decode(localStorage.getItem("jwt"));
+
+        if (decoded.bruger.admin==="1"){
+            // ADMIN
+            $("#cook-se-maddag").attr("disabled", false);
+            $("#help-se-maddag").attr("disabled", false);
+            $("#dish-se-maddag").attr("disabled", false);
+        } else {
+            // ALMINDELIG BRUGER
+
+        }
+    } catch(err) {
+        // IKKE LOGGET IND
+
+    }
 }
 
 function attend(id){
@@ -260,4 +395,41 @@ function disattend(id){
     });
 }
 
+
+$("#maddagform-se-maddag").bind("keyup change", function(){
+    datoid = $("#maddagform-se-maddag").data("id");
+    cook = $("#cook-se-maddag").val();
+    dish = $("#dish-se-maddag").val();
+    help = $("#help-se-maddag").val();
+
+    payload = {"cook": cook, "dish": dish, "help": help};
+
+
+    $.ajax({
+        url: "public/dates/"+datoid,
+        method: "PUT",
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(payload),
+        success: function(data, textStatus, jqXhr){
+            console.log(data);
+
+            row = $("#date-"+datoid)
+            row.children().eq(1).html(cook);
+            row.children().eq(2).html(dish);
+
+        },
+        error: function(data, textStatus, jqXhr){
+            console.log(textStatus);
+            console.log(data);
+            //localStorage.removeItem("jwt");
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function(jqXhr, textStatus){
+            //reloadRelevant();
+        }
+    });
+});
 

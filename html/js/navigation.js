@@ -32,6 +32,8 @@ function reloadRelevant() {
         $("#menu-logind").show();  $("#offmenu-logind").show();
         navigateToLogind();
     }
+
+    reloardRelevantMaddage();
 }
 
 function offMenuCurrentClear(){
