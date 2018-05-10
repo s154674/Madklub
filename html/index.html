@@ -72,8 +72,8 @@
                     <div id="content-forside" class="cell callout content">
                         <div class="callout secondary">
                             <h2>Næste Maddag:</h2>
-                            <div id="first box" class="callout primary">
-                                <p>Dato: <span>[[date]]</span></p>
+                            <div id="first-box" class="callout primary">
+                                <p id="datoo"> Dato: <span>[[date]]</span></p>
                                 <p>Kok: <span>[[cook]]</span></p>
                                 <p>Hjælper: <span>[[help]]</span></p>
                                 <p>Dagens ret: <span>[[dish]]</span></p>
@@ -81,18 +81,18 @@
                         </div>
                         <div class="callout secondary">
                             <h2>Tilmeldte:</h2>
-                            <div class="expanded button-group">
-                                <a class="button ">TIL MAD<br/><span>[[x1]]</span></a>
-                                <a class="button secondary ">TIL BORDS<br/><span>[[x2]]</span></a>
-                                <a class="button secondary ">PÅ SENERE<br/><span>[[x3]]</span></a>
-                            </div>
-                            <div class="callout primary">
-                                <ul>
-                                    <li>Mark</li>
-                                    <li>Sven</li>
-                                    <li>Peter</li>
-                                    <li>Louise + Ven</li>
-                                </ul>
+                            <ul class="tabs" data-tabs id="example-tabs">
+                                <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Til Tiden</a></li>
+                                <li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">For Sent</a></li>
+                            </ul>
+                            <div class="tabs-content" data-tabs-content="example-tabs">
+                                <div class="tabs-panel is-active" id="panel1">
+                                    <p>RANDOM NAVNE</p>
+                                </div>
+                                <div class="tabs-panel" id="panel2">
+                                    <p>FOLK DER KOMMER FOR SENT ER CUNTS</p>
+                                    <p>FOLK DER KOMMER FOR SENT ER CUNTS</p>
+                                </div>
                             </div>
                         </div>
                     </div>

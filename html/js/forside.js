@@ -2,21 +2,26 @@ function initForside(){
     console.log("Forside blev åbnet i did this");
 
     $.ajax({
-        url: "public//forside",
+        url: "public/frontpage",
         method: "GET",
         contentType: 'application/json',
         success: function(data, textStatus, jqXhr){
-            console.log(JSON.stringify(data) + " i did this");
+            data = JSON.parse(data);
+           // console.log(JSON.stringify(data) + " i did this");
+            console.log(data);
 
-            peopletabledata = $("#first box");
+            peopletabledata = $("#first-box");
             peopletabledata.empty();
-            $.each(data, function(i, maddag){
-                row = "<p>"+maddag['date']+"</p>";
-                row2 = "<p>"+maddag['cook']+"</p>";
-                row3 = "<p>"+maddag['help']+"</p>";
-                row4 = "<p>"+maddag['dish']+"</p>";
-                peopletabledata.append(row+row2+row3+row4);
-            });
+
+                row1 = "<p>" +"<b> Dato: </b>" +data.date+"</p>";
+                row2 = "<p>" +"<b> Kok: </b>" +data.cook+"</p>";
+                row3 = "<p>" +"<b> Hjælpere: </b>" +data.help+"</p>";
+                row4 = "<p>" +"<b> Ret: </b>" +data.dish+"</p>";
+                peopletabledata.append(row1);
+                peopletabledata.append(row2);
+                peopletabledata.append(row3);
+                peopletabledata.append(row4);
+
         },
         error: function(data, textStatus, jqXhr){
             console.log(data);
@@ -24,9 +29,6 @@ function initForside(){
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
         },
-        complete: function(jqXhr, textStatus){
-            localStorage.setItem("jwt", jqXhr.getResponseHeader('Authorization').substring(7));
-            reloadRelevant();
-        }
+
     });
 }
