@@ -127,6 +127,15 @@ button.round, .button.round {
     color: #0a0a0a;
 }
 
+.callout.secondary {
+    background-color: #f8f8f8;
+    color: #0a0a0a;
+}
+
 .callout {
     border: none;
+}
+
+h2{
+    font-family: 'Quicksand', sans-serif;
 }
