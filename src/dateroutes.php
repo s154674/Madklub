@@ -142,6 +142,74 @@ $app->put('/dates/{id}/attendees/{userid}', function (Request $request, Response
     //return $response;
 })->add($authonly);
 
+$app->put('/dates/{id}/settle', function (Request $request, Response $response) {
+    $dateid = $request->getAttribute('id');
+    $userid = $request->getAttribute('user_id');
+    $body = $request->getParsedBody();
+
+    $currentuser = $request->getAttribute('bruger');
+    $jwtuserid = $currentuser['user_id'];
+
+    if (!(intval($userid)==$body['cookid'] || $currentuser['admin'])) {
+        return $response
+            ->withStatus(401)
+            ->write("Could not authorize user");
+    }
+
+    $keys=array();
+    $values=array();
+
+    foreach($body as $key => $value){
+        array_push($keys,$key);
+        array_push($values,$value);
+    }
+
+    $sql = "CALL settle ( ".$id.", ".join(", "), $values.");";
+
+    $updateresult = mysqli_query($this->link, $sql);
+    $sql2 = "SELECT * FROM dates WHERE date_id = ".$dateid.";";
+
+    if(!$updateresult){
+        return $response
+            ->withStatus(500)
+            ->write("could not post date");
+    }
+    $result = mysqli_query($this->link, $sql2);
+    for ($i=0;$i<mysqli_num_rows($result);$i++) {
+        echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+    }  
+
+    //return $response;
+})->add($authonly)
+
+$app->put('/dates/{id}/unsettle', function (Request $request, Response $response) {
+    $body = $request->getParsedBody();
+
+    $keys=array();
+    $values=array();
+
+    foreach($body as $key => $value){
+        array_push($keys,$key);
+        array_push($values,$value);
+    }
+
+    $sql = "CALL unsettle ( ".$id.", ".join(", "), $values.");";
+    $updateresult = mysqli_query($this->link, $sql);
+    $sql2 = "SELECT * FROM dates WHERE date_id = ".$dateid.";";
+
+    if(!$updateresult){
+        return $response
+            ->withStatus(500)
+            ->write("could not post date");
+    }
+    $result = mysqli_query($this->link, $sql2);
+    for ($i=0;$i<mysqli_num_rows($result);$i++) {
+        echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+    }  
+
+    //return $response;
+})->add($authonly)->add($adminonly);
+
 //logic for POST endpoints
 $app->post('/dates', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
@@ -270,3 +338,5 @@ $app->delete('/dates/{id}/attendees/{userid}', function (Request $request, Respo
 
     //return $response;
 })->add($authonly);
+
+
