@@ -78,8 +78,9 @@ function initMaddage(){
                         $("#cook-se-maddag").val(data.cook);
                         $("#dish-se-maddag").val(data.dish);
                         $("#help-se-maddag").val(data.help);
-                        $("#attendance-se-maddag").val(data.currentimg);
 
+                        $("#luk-maddag input[name='cookid']").val(data.cook);
+                        $("#luk-maddag input[name='dateid']").val(datoid);
 
                         try {
                             decoded = jwt_decode(localStorage.getItem("jwt"));
@@ -227,18 +228,33 @@ function initMaddage(){
             select1 = $("#cook-se-maddag");
             select2 = $("#help-se-maddag");
             select3 = $("#create-maddag select[name='cook']");
+
+            select4 = $("#luk-maddag select[name='help']");
+            select5 = $("#luk-maddag select[name='washer-1']");
+            select6 = $("#luk-maddag select[name='washer-2']");
+            select7 = $("#luk-maddag select[name='washer-3']");
+
+
             select1.empty();
             select2.empty();
             select3.empty();
+
+            select4.empty();
+            select5.empty();
+            select6.empty();
+            select7.empty();
             $.each(data, function(i, user) {
                 select1.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
                 select2.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
                 select3.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
+
+                select4.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
+                select5.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
+                select6.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
+                select7.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
             });
         },
         error: function (data, textStatus, jqXhr) {
-            console.log(textStatus);
-            console.log(data);
             localStorage.removeItem("jwt");
         },
         beforeSend: function (xhr, settings) {
@@ -404,11 +420,13 @@ function disattend(id){
     });
 }
 
-$("#se-maddag").on('closed.zf.reveal', function(){
-    initMaddage();
+$("#se-maddag").on('closed.zf.reveal', function(e){
+    //initMaddage();
 });
 
-
+$("#maddagform-se-maddag").on('submit', function(e){
+    e.preventDefault();
+});
 $("#maddagform-se-maddag").bind("keyup change", function() {
     datoid = $("#maddagform-se-maddag").data("id");
     cook = $("#cook-se-maddag").val();
@@ -430,15 +448,17 @@ $("#maddagform-se-maddag").bind("keyup change", function() {
         success: function(data, textStatus, jqXhr){
             console.log(data);
 
-            row = $("#date-"+datoid)
-            row.children().eq(1).html(cook);
+            row = $("#date-"+datoid);
+            user = users.find(function(user){
+                return user.user_id === cook;
+            });
+
+            row.children().eq(1).html(user.name);
             row.children().eq(2).html(dish);
 
         },
         error: function(data, textStatus, jqXhr){
-            console.log(textStatus);
-            console.log(data);
-            //localStorage.removeItem("jwt");
+            localStorage.removeItem("jwt");
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
@@ -451,6 +471,83 @@ $("#maddagform-se-maddag").bind("keyup change", function() {
 
 $("#luk-se-maddag").click(function(){
     console.log("udfyld");
+
+    help = $("#help-se-maddag").val();
+
+    $.ajax({
+        url: "public/washers",
+        method: "GET",
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data, textStatus, jqXhr){
+            console.log(data);
+
+            washer1 = data[0];
+            washer2 = data[1];
+            washer3 = data[2];
+
+            $("#luk-maddag select[name='help']").val(parseInt(help));
+            $("#luk-maddag select[name='washer-1']").val(parseInt(washer1.user_id));
+            $("#luk-maddag select[name='washer-2']").val(parseInt(washer2.user_id));
+            $("#luk-maddag select[name='washer-3']").val(parseInt(washer3.user_id));
+
+            $("#luk-maddag input[name='price']").focus();
+        },
+        error: function(data, textStatus, jqXhr){
+
+            localStorage.removeItem("jwt");
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function(jqXhr, textStatus){
+            reloadRelevant();
+        }
+    });
+});
+
+$("#luk-maddag form").on('submit', function(e){
+    e.preventDefault();
+
+    cook = $("#luk-maddag input[name='cookid']").val();
+    date = $("#luk-maddag input[name='dateid']").val();
+    help = $("#luk-maddag select[name='help']").val();
+    washer1 = $("#luk-maddag select[name='washer-1']").val();
+    washer2 = $("#luk-maddag select[name='washer-2']").val();
+    washer3 = $("#luk-maddag select[name='washer-3']").val();
+    price = $("#luk-maddag input[name='price']").val();
+
+
+    payload = {
+        "cookid": cook,
+        "helpid": help,
+        "washerone": washer1,
+        "washertwo": washer2,
+        "washerthree": washer3,
+        "price": price
+    };
+
+    console.log(payload);
+
+    $.ajax({
+        url: "public/dates/"+date+"/settle",
+        method: "PUT",
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(payload),
+        success: function(data, textStatus, jqXhr){
+            console.log(data);
+        },
+        error: function(data, textStatus, jqXhr){
+            //localStorage.removeItem("jwt");
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function(jqXhr, textStatus){
+            reloadRelevant();
+        }
+    });
 });
 
 
