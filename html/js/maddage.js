@@ -408,14 +408,17 @@ $("#se-maddag").on('closed.zf.reveal', function(){
 });
 
 
-$("#maddagform-se-maddag").bind("keyup change", function(){
+$("#maddagform-se-maddag").bind("keyup change", function() {
     datoid = $("#maddagform-se-maddag").data("id");
     cook = $("#cook-se-maddag").val();
     dish = $("#dish-se-maddag").val();
     help = $("#help-se-maddag").val();
 
-    payload = {"cook": cook, "dish": dish, "help": help};
-
+    if (help != null) {
+        payload = {"cook": cook, "dish": dish, "help": help};
+    } else {
+        payload = {"cook": cook, "dish": dish};
+    }
 
     $.ajax({
         url: "public/dates/"+datoid,
@@ -445,6 +448,9 @@ $("#maddagform-se-maddag").bind("keyup change", function(){
     });
 });
 
+$("#luk-se-maddag").click(function(){
+    console.log("udfyld");
+});
 
 
 $("#new-maddag").click(function(){
