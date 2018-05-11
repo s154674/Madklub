@@ -71,8 +71,8 @@
                 <div class="grid-x grid-margin-x">
                     <div id="content-forside" class="cell callout content">
                         <div class="callout secondary">
-                            <h2>Information</h2>
-                            <div class="callout primary">
+                            <h2>Næste Maddag:</h2>
+                            <div id="first box" class="callout primary">
                                 <p>Dato: <span>[[date]]</span></p>
                                 <p>Kok: <span>[[cook]]</span></p>
                                 <p>Hjælper: <span>[[help]]</span></p>
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="callout secondary">
-                            <h2>Folk der kommer</h2>
+                            <h2>Tilmeldte:</h2>
                             <div class="expanded button-group">
                                 <a class="button ">TIL MAD<br/><span>[[x1]]</span></a>
                                 <a class="button secondary ">TIL BORDS<br/><span>[[x2]]</span></a>
@@ -219,14 +219,14 @@
                                             </label>
                                         </div>
                                         <div class="cell small-12 medium-6">
-                                            <label>Ret:
+                                            <label>Ret
                                                 <input name="dish"  id="dish-se-maddag" disabled type="text" value="Bacon Cheese Burger">
                                             </label>
                                         </div>
                                     </div>
                                     <div class="grid-x grid-margin-x">
                                         <div class="cell medium-6">
-                                            <label>Hjælper:
+                                            <label>Hjælper
                                                 <select name="help"  id="help-se-maddag" disabled>
                                                     <option value="showboat">Justin Bieber</option>
                                                     <option value="redwing">Redwing</option>
@@ -330,10 +330,8 @@
                                     </label>
                                 </div>
                                 <div class="cell medium-6">
-                                    <label>Kok
-                                        <select>
-                                            <option>hej</option>
-                                        </select>
+                                    <label>Dato
+                                        <input type="date">
                                     </label>
                                 </div>
                             </div>
