@@ -1,8 +1,6 @@
 users = [];
 
 function initMaddage(){
-    console.log("Maddage blev åbnet");
-
     $.ajax({
         url: "public/futuredates",
         method: "GET",
@@ -65,15 +63,6 @@ function initMaddage(){
                     contentType: 'application/json',
                     dataType: 'json',
                     success: function(data, textStatus, jqXhr){
-                        // attendance-se-maddag
-                        // dato-se-maddag
-                        // luk-se-maddag
-                        // cook-se-maddag
-                        // dish-se-maddag
-                        // help-se-maddag
-
-                        console.log(data);
-
                         $("#dato-se-maddag").html(data.date);
                         $("#cook-se-maddag").val(data.cook);
                         $("#dish-se-maddag").val(data.dish);
@@ -163,8 +152,6 @@ function initMaddage(){
                         $("#count-se-maddag").val(countfortable);
                     },
                     error: function (data, textStatus, jqXhr) {
-                        console.log(textStatus);
-                        console.log(data);
                         localStorage.removeItem("jwt");
                     },
                     beforeSend: function (xhr, settings) {
@@ -204,8 +191,6 @@ function initMaddage(){
             localStorage.setItem("jwt", jqXhr.getResponseHeader('Authorization').substring(7));
         },
         error: function(data, textStatus, jqXhr){
-            console.log(textStatus);
-            console.log(data);
             localStorage.removeItem("jwt");
         },
         beforeSend: function(xhr, settings) {
@@ -300,19 +285,16 @@ function attend(id){
         dataType: 'json',
         data: JSON.stringify({late: 0, guest:0}),
         success: function(data, textStatus, jqXhr){
-            console.log("attended");
             $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/greencheck.png");
         },
         error: function(data, textStatus, jqXhr){
-            console.log(textStatus);
-            console.log(data);
-            //localStorage.removeItem("jwt");
+            localStorage.removeItem("jwt");
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
         },
         complete: function(jqXhr, textStatus){
-            //reloadRelevant();
+            reloadRelevant();
         }
     });
 }
@@ -326,19 +308,16 @@ function late(id){
         dataType: 'json',
         data: JSON.stringify({late: 1, guest:0}),
         success: function(data, textStatus, jqXhr){
-            console.log("latered");
             $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/yellowcheck.png");
         },
         error: function(data, textStatus, jqXhr){
-            console.log(textStatus);
-            console.log(data);
-            //localStorage.removeItem("jwt");
+            localStorage.removeItem("jwt");
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
         },
         complete: function(jqXhr, textStatus){
-            //reloadRelevant();
+            reloadRelevant();
         }
     });
 }
@@ -356,15 +335,13 @@ function guest(id){
             $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/greenplus1.png");
         },
         error: function(data, textStatus, jqXhr){
-            console.log(textStatus);
-            console.log(data);
-            //localStorage.removeItem("jwt");
+            localStorage.removeItem("jwt");
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
         },
         complete: function(jqXhr, textStatus){
-            //reloadRelevant();
+            reloadRelevant();
         }
     });
 }
@@ -382,15 +359,13 @@ function lateguest(id){
             $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/yellowplus1.png");
         },
         error: function(data, textStatus, jqXhr){
-            console.log(textStatus);
-            console.log(data);
-            //localStorage.removeItem("jwt");
+            localStorage.removeItem("jwt");
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
         },
         complete: function(jqXhr, textStatus){
-            //reloadRelevant();
+            reloadRelevant();
         }
     });
 }
@@ -403,19 +378,16 @@ function disattend(id){
         contentType: 'application/json',
         dataType: 'json',
         success: function(data, textStatus, jqXhr){
-            console.log("disattended");
             $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/noee.png");
         },
         error: function(data, textStatus, jqXhr){
-            console.log(textStatus);
-            console.log(data);
-            //localStorage.removeItem("jwt");
+            localStorage.removeItem("jwt");
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
         },
         complete: function(jqXhr, textStatus){
-            //reloadRelevant();
+            reloadRelevant();
         }
     });
 }
@@ -470,18 +442,16 @@ $("#maddagform-se-maddag").bind("keyup change", function() {
 });
 
 $("#luk-se-maddag").click(function(){
-    console.log("udfyld");
 
     help = $("#help-se-maddag").val();
+    datoid = $("#maddagform-se-maddag").data("id");
 
     $.ajax({
-        url: "public/washers",
+        url: "public/dates/"+datoid+"/washers",
         method: "GET",
         contentType: 'application/json',
         dataType: 'json',
         success: function(data, textStatus, jqXhr){
-            console.log(data);
-
             washer1 = data[0];
             washer2 = data[1];
             washer3 = data[2];
@@ -494,7 +464,6 @@ $("#luk-se-maddag").click(function(){
             $("#luk-maddag input[name='price']").focus();
         },
         error: function(data, textStatus, jqXhr){
-
             localStorage.removeItem("jwt");
         },
         beforeSend: function(xhr, settings) {
@@ -527,8 +496,6 @@ $("#luk-maddag form").on('submit', function(e){
         "price": price
     };
 
-    console.log(payload);
-
     $.ajax({
         url: "public/dates/"+date+"/settle",
         method: "PUT",
@@ -548,6 +515,9 @@ $("#luk-maddag form").on('submit', function(e){
             reloadRelevant();
         }
     });
+
+    $("#luk-maddag").foundation('close');
+    initMaddage();
 });
 
 
@@ -570,8 +540,6 @@ $("#create-maddag").on('submit',function(e){
     cook = $(this).find("select[name='cook']").val();
     date = $(this).find("input[name='date']").val();
 
-    console.log(date);
-
     payload = {"cook": cook, "date": date};
 
     $.ajax({
@@ -581,10 +549,10 @@ $("#create-maddag").on('submit',function(e){
         dataType: 'json',
         data: JSON.stringify(payload),
         success: function(data, textStatus, jqXhr){
+            console.log(data);
             initMaddage();
         },
         error: function(data, textStatus, jqXhr){
-            console.log(textStatus);
             console.log(data);
             localStorage.removeItem("jwt");
         },

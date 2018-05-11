@@ -79,49 +79,53 @@
                                 <p>Dagens ret: <span>[[dish]]</span></p>
                             </div>
                         </div>
-                        <div class="callout secondary">
-                            <h2 id="tilmeldte-antal"> Tilmeldte:</h2>
-                            <ul class="tabs" data-tabs id="example-tabs">
-                                <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Til tiden</a></li>
-                                <li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Kommer senere</a></li>
-                            </ul>
-                            <div class="tabs-content" data-tabs-content="example-tabs">
-                                <div class="tabs-panel is-active" id="panel1">
-                                    <table class="hover unstriped">
-                                        <thead>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Dummy name</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        <div class="grid-container">
+                            <div class="grid-x grid-margin-x">
+                                <div class="cell large-6">
+                                    <div class="callout secondary">
+                                        <h2 id="tilmeldte-antal"> Tilmeldte:</h2>
+                                        <ul class="tabs" data-tabs id="example-tabs">
+                                            <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Til tiden</a></li>
+                                            <li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Kommer senere</a></li>
+                                        </ul>
+                                        <div class="tabs-content" data-tabs-content="example-tabs">
+                                            <div class="tabs-panel is-active" id="panel1">
+                                                <table class="hover unstriped">
+                                                    <thead>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="tabs-panel" id="panel2">
+                                                <table class="hover unstriped">
+                                                    <thead>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="tabs-panel" id="panel2">
-                                    <table class="hover unstriped">
-                                        <thead>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Dummy name</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="cell large-6">
+                                    <div class="callout secondary">
+                                        <h2>Opvaskere:</h2>
+                                        <div id="opvaskere" class="callout primary">
+                                            <table class="hover unstriped">
+                                                <thead>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>Dummy name</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="callout secondary">
-                            <h2>Opvaskere:</h2>
-                            <div id="opvaskere" class="callout primary">
-                                <table class="hover unstriped">
-                                    <thead>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Dummy name</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -171,53 +175,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Imorgen</td>
-                                <td>Gordon Ramsey</td>
-                                <td>Burger</td>
-                                <td>
-                                    <img src="logos/greencheck.png" data-toggle="example-dropdown-top-center">
-                                    <div class="dropdown-pane" data-position="top" data-alignment="center" id="example-dropdown-top-center" data-dropdown data-auto-focus="true">
-                                        <div class="grid-container">
-                                            <div class="grid-x grid-margin-x">
-                                                <div class="cell small-12">
-                                                    <ul class="menu expanded">
-                                                        <li><img src="logos/greencheck.png"></li>
-                                                        <li><img src="logos/greenplus1.png"></li>
-                                                        <li><img src="logos/yellowcheck.png"></li>
-                                                        <li><img src="logos/yellowplus1.png"></li>
-                                                        <li><img src="logos/noee.png"></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Imorgen</td>
-                                <td>Gordon Ramsey</td>
-                                <td>Burger</td>
-                                <td>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Imorgen</td>
-                                <td>Gordon Ramsey</td>
-                                <td>Burger</td>
-                                <td>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Imorgen</td>
-                                <td>Gordon Ramsey</td>
-                                <td>Burger</td>
-                                <td>
-
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
 
@@ -241,9 +198,6 @@
                                             <label>Kok
                                                 <select name="cook" id="cook-se-maddag" disabled>
                                                     <option value="showboat">Fie Laursen</option>
-                                                    <option value="redwing">Redwing</option>
-                                                    <option value="narcho">Narcho</option>
-                                                    <option value="hardball">Hardball</option>
                                                 </select>
                                             </label>
                                         </div>
@@ -257,14 +211,8 @@
                                         <div class="cell medium-6">
                                             <label>Hjælper
                                                 <select name="help"  id="help-se-maddag" disabled>
-                                                    <option value="showboat">Justin Bieber</option>
-                                                    <option value="redwing">Redwing</option>
-                                                    <option value="narcho">Narcho</option>
-                                                    <option value="hardball">Hardball</option>
                                                 </select>
                                             </label>
-                                            <hr>
-                                            Opvaskere...
                                         </div>
                                         <div class="cell medium-6">
                                             <label>Spiser med
@@ -280,24 +228,7 @@
                                                         <thead>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>Hejlo</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Hejlo</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Hejlo</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Hejlo</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Hejlo</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Hejlo</td>
-                                                            </tr>
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -306,24 +237,7 @@
                                                         <thead>
                                                         </thead>
                                                         <tbody>
-                                                        <tr>
-                                                            <td>Aleksander</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Louise</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Mikeal</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Sven</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Peter</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Valdemar</td>
-                                                        </tr>
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -338,7 +252,6 @@
 
                         <!-- This is the nested modal -->
                         <div class="reveal medium" id="luk-maddag" data-reveal>
-                            <h2 id="dato-luk-maddag">Dato</h2>
                             <button class="close-button" data-close aria-label="Close reveal" type="button">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -427,11 +340,68 @@
                     </div>
 
                     <div id="content-profil" class="cell callout content">
-                        <h1 id="name-profil">navn</h1>
-                        <p id="login-profil">brugernavn</p>
-                        <p id="numerator-profil">Tæller</p>
-                        <p id="denominator-profil">Nævner</p>
-                        <p id="admin-profil">Admin</p>
+                        <div class="grid-container">
+                            <div class="grid-x grid-margin-x">
+                                <div class="cell medium-offset-3 medium-6">
+                                    <label>Login
+                                        <input disabled type="text" id="login-profil">
+                                    </label>
+                                </div>
+                                <div class="cell medium-offset-3 medium-6">
+                                    <label>Navn
+                                        <input type="text" id="name-profil">
+                                    </label>
+                                </div>
+                                <div class="cell medium-offset-3 medium-6">
+                                    <div>
+                                        <p class="text-center">
+                                            Din brøk:
+                                            <sup><span id="numerator-profil">Tæller</span></sup>&frasl;<sub><span id="denominator-profil">Nævner</span></sub>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="cell medium-offset-3 medium-6">
+                                    <div>
+                                        <button class="button expanded" data-open="skift-password-profil" value="Skift password">Skift password</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reveal" id="skift-password-profil" data-reveal>
+                            <button class="close-button" data-close aria-label="Close reveal" type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                            <form id="skift-password-form">
+                                <div class="grid-container">
+                                    <div class="grid-x grid-margin-x">
+                                        <div class="cell small-12">
+                                            <h2>Skift password på javabog.dk</h2>
+                                        </div>
+                                        <div class="cell small-12">
+                                            <label>Nuværende password
+                                                <input type="password" name="old">
+                                            </label>
+                                        </div>
+                                        <div class="cell small-12">
+                                            <label>Nyt password
+                                                <input type="password" name="new">
+                                            </label>
+                                        </div>
+                                        <div class="cell small-12">
+                                            <label>Gentag nyt password
+                                                <input type="password" name="new-repeat">
+                                            </label>
+                                        </div>
+                                        <div class="cell small-12">
+                                            <input type="submit" class="button expanded" value="Skift password">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
 
                     <div id="content-logind" class="small-12 large-4 large-offset-4 cell callout content">
@@ -445,7 +415,7 @@
                             </label>
                             <p id="wrongtext-logind" style="font-size:12px; line-height:15px; color:red; display: none; text-align:center;">Desværre, prøv igen</p>
                             <p id="notext-logind" style="line-height:15px;">&nbsp;</p>
-                            <p><input type="submit" class="button radius expanded" value="Log ind"></input></p>
+                            <p><input type="submit" class="button radius expanded" value="Log ind"></p>
                         </form>
                     </div>
                 </div>

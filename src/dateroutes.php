@@ -22,7 +22,7 @@ $app->get('/dates/{id}', function (Request $request, Response $response) {
 
 $app->get('/dates/{id}/attendees', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $sql = 'SELECT * FROM attendance WHERE dateid='.$id.';';
+    $sql = 'SELECT dateid, userid, late, guest, users.name AS name FROM attendance JOIN users ON attendance.userid = users.user_id WHERE dateid='.$id.';';
     $result = mysqli_query($this->link, $sql);
     if(!$result){
         return $response
@@ -35,6 +35,17 @@ $app->get('/dates/{id}/attendees', function (Request $request, Response $respons
         } 
         echo ']';
     }           
+});
+
+$app->get('/dates/{id}/washers', function (Request $request, Response $response) {
+    $dateid = $request->getAttribute('id');
+    echo '[';
+    $sql = 'SELECT user_id, name, numerator, denominator FROM users WHERE user_id IN (SELECT userid FROM attendance WHERE dateid = '.$dateid.' AND late = 0) ORDER BY users.numerator / users.denominator;';
+    $result = mysqli_query($this->link, $sql);
+    for ($i=0;$i<mysqli_num_rows($result);$i++) {
+        echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));       
+    }
+    echo']';
 });
 
 //logic for PUT endpoints 
@@ -91,9 +102,10 @@ $app->put('/dates/{id}', function (Request $request, Response $response) {
 
 //logic for PUT endpoints 
 $app->put('/dates/{id}/attendees/{userid}', function (Request $request, Response $response) {
-    $id = $request->getAttribute('id');
+    $dateid = $request->getAttribute('id');
     $userid = $request->getAttribute('userid');
     $body = $request->getParsedBody();
+
     
     $currentuser = $request->getAttribute('bruger');
     $jwtuserid = $currentuser['user_id'];
@@ -123,8 +135,8 @@ $app->put('/dates/{id}/attendees/{userid}', function (Request $request, Response
         array_push($vals, $value);
     }
 
-    $sql = "REPLACE INTO attendance ( userid, dateid, ".join(", ",$keys).") VALUES ( ".$userid.", ".$id.", ".join(", ",$vals).");";
-    $sql2= "SELECT * FROM attendance WHERE userid=".$userid." AND dateid=".$id.";";
+    $sql = "REPLACE INTO attendance ( userid, dateid, ".join(", ",$keys).") VALUES ( ".$userid.", ".$dateid.", ".join(", ",$vals).");";
+    $sql2= "SELECT * FROM attendance WHERE userid=".$userid." AND dateid=".$dateid.";";
     $updateresult = mysqli_query($this->link, $sql);
     if(!$updateresult){
         return $response
@@ -144,13 +156,23 @@ $app->put('/dates/{id}/attendees/{userid}', function (Request $request, Response
 
 $app->put('/dates/{id}/settle', function (Request $request, Response $response) {
     $dateid = $request->getAttribute('id');
-    $userid = $request->getAttribute('user_id');
     $body = $request->getParsedBody();
+
+    $sql = 'SELECT settled FROM dates WHERE date_id='.$dateid.';';
+    $result = mysqli_query($this->link, $sql);
+    $datevalues = mysqli_fetch_assoc($result);
+    $settled = $datevalues["settled"];
+
+    if($settled){
+        return $response
+            ->withStatus(412)
+            ->write("date already settled.");
+    }
 
     $currentuser = $request->getAttribute('bruger');
     $jwtuserid = $currentuser['user_id'];
 
-    if (!(intval($userid)==$body['cookid'] || $currentuser['admin'])) {
+    if (!(intval($jwtuserid)==$body['cookid'] || $currentuser['admin'])) {
         return $response
             ->withStatus(401)
             ->write("Could not authorize user");
@@ -164,8 +186,7 @@ $app->put('/dates/{id}/settle', function (Request $request, Response $response) 
         array_push($values,$value);
     }
 
-    $sql = "CALL settle ( ".$id.", ".join(", "), $values.");";
-
+    $sql = "CALL settle ( ".$dateid.", ".$body['cookid'].", ".$body['helpid'].", ".$body['washerone'].", ".$body['washertwo'].", ".$body['washerthree'].", ".$body['price'].");";
     $updateresult = mysqli_query($this->link, $sql);
     $sql2 = "SELECT * FROM dates WHERE date_id = ".$dateid.";";
 
@@ -180,20 +201,26 @@ $app->put('/dates/{id}/settle', function (Request $request, Response $response) 
     }  
 
     //return $response;
-})->add($authonly)
+})->add($authonly);
 
 $app->put('/dates/{id}/unsettle', function (Request $request, Response $response) {
+    $dateid = $request->getAttribute('id');
     $body = $request->getParsedBody();
 
-    $keys=array();
-    $values=array();
+    $sql = 'SELECT cook, price, settled FROM dates WHERE date_id='.$dateid.';';
+    $result = mysqli_query($this->link, $sql);
+    $datevalues = mysqli_fetch_assoc($result);
+    $cook = $datevalues["cook"];
+    $price = $datevalues["price"];
+    $settled = $datevalues["settled"];
 
-    foreach($body as $key => $value){
-        array_push($keys,$key);
-        array_push($values,$value);
+    if(!$settled){
+        return $response
+            ->withStatus(412)
+            ->write("date already not settled.");
     }
 
-    $sql = "CALL unsettle ( ".$id.", ".join(", "), $values.");";
+    $sql = "CALL unsettle ( ".$dateid.", ".$cook.", ".$price.");";
     $updateresult = mysqli_query($this->link, $sql);
     $sql2 = "SELECT * FROM dates WHERE date_id = ".$dateid.";";
 
@@ -208,7 +235,7 @@ $app->put('/dates/{id}/unsettle', function (Request $request, Response $response
     }  
 
     //return $response;
-})->add($authonly)->add($adminonly);
+})->add($adminonly)->add($authonly);
 
 //logic for POST endpoints
 $app->post('/dates', function (Request $request, Response $response) {
@@ -223,6 +250,7 @@ $app->post('/dates', function (Request $request, Response $response) {
     }
 
     $sql = "INSERT INTO dates (".join(", ",$keys).") VALUES (".join(", ",$values).");";
+
     $updateresult = mysqli_query($this->link, $sql);
     $sql2 = "SELECT * FROM dates ORDER BY date_id DESC LIMIT 0, 1;";
 
@@ -237,7 +265,7 @@ $app->post('/dates', function (Request $request, Response $response) {
     }  
 
     //return $response;
-})->add($authonly)->add($adminonly);
+})->add($adminonly)->add($authonly);
 
 
 $app->post('/dates/{id}/attendees', function (Request $request, Response $response) {
@@ -306,11 +334,11 @@ $app->delete('/dates/{id}', function (Request $request, Response $response) {
     
 
     //return $response;
-})->add($authonly)->add($adminonly);
+})->add($adminonly)->add($authonly);
 
 
 $app->delete('/dates/{id}/attendees/{userid}', function (Request $request, Response $response) {
-    $id = $request->getAttribute('id');
+    $dateid = $request->getAttribute('id');
     $userid = $request->getAttribute('userid');
 
     $currentuser = $request->getAttribute('bruger');
@@ -322,17 +350,28 @@ $app->delete('/dates/{id}/attendees/{userid}', function (Request $request, Respo
             ->write("Could not authorize user");
     }
 
-    $sql = "DELETE FROM attendance WHERE dateid = ".$id." AND userid = ".$userid.";";
+    $sql = 'SELECT cook FROM dates WHERE date_id='.$dateid.';';
+    $result = mysqli_query($this->link, $sql);
+    $datevalues = mysqli_fetch_assoc($result);
+    $cook = $datevalues["cook"];
+
+    if($cook == $userid){
+        return $response
+            ->withStatus(401)
+            ->write("The cook must attend his/her own date.");
+    }
+
+    $sql = "DELETE FROM attendance WHERE dateid = ".$dateid." AND userid = ".$userid.";";
     $result = mysqli_query($this->link, $sql);
 
     if($result){
         return $response
             ->withStatus(204)
-            ->write("Date with id: ".$id." deleted.");
+            ->write("Attendence from date with id: ".$dateid." and userid ".$userid." deleted.");
     } else {
         return $response
             ->withStatus(404)
-            ->write("Date with id: ".$id." was not found.");
+            ->write("Attendence from date with id: ".$dateid." and userid ".$userid." was not found.");
     };
     
 

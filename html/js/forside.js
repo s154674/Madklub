@@ -51,7 +51,7 @@ function updateAttendees(id) {
     });
 }
 function initForside(){
-    console.log("Forside blev åbnet i did this")
+    console.log("Forside blev åbnet")
     $.ajax({
         url: "public/frontpage",
         method: "GET",
@@ -61,6 +61,7 @@ function initForside(){
            // console.log(JSON.stringify(data) + " i did this");
             console.log(data);
             datoid = data.date_id;
+            console.log(datoid);
 
             peopletabledata = $("#first-box");
             peopletabledata.empty();
