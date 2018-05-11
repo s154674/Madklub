@@ -121,6 +121,12 @@ $app->put('/users/{id}/changepassword', function (Request $request, Response $re
     $new = $body['new'];
     $newrepeat = $body['new-repeat'];
 
+    if ($new != $newrepeat) {
+            return $response
+                ->withStatus(403)
+                ->write("Not identical passwords");
+     }
+
     $currentuser = $request->getAttribute('bruger');
     $jwtuserid = $currentuser['user_id'];
 
