@@ -99,6 +99,7 @@ function initMaddage(){
                             }
 
                             if (decoded.bruger.id===data.cook){
+                                $("#help-se-maddag").attr("disabled", false);
                                 $("#dish-se-maddag").attr("disabled", false);
                                 $("#attendance-se-maddag").hide();
                                 $("#luk-se-maddag").show();
@@ -224,11 +225,14 @@ function initMaddage(){
             users = data;
             select1 = $("#cook-se-maddag");
             select2 = $("#help-se-maddag");
+            select3 = $("#create-maddag select[name='cook']");
             select1.empty();
             select2.empty();
+            select3.empty();
             $.each(data, function(i, user) {
                 select1.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
                 select2.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
+                select3.append($("<option></option>").attr("value", user['user_id']).text(user['name']));
             });
         },
         error: function (data, textStatus, jqXhr) {
@@ -255,9 +259,13 @@ function reloardRelevantMaddage() {
             $("#cook-se-maddag").attr("disabled", false);
             $("#help-se-maddag").attr("disabled", false);
             $("#dish-se-maddag").attr("disabled", false);
+
+            $("#new-maddag").show();
+            $("#create-maddag").hide();
         } else {
             // ALMINDELIG BRUGER
-
+            $("#new-maddag").hide();
+            $("#create-maddag").hide();
         }
     } catch(err) {
         // IKKE LOGGET IND
@@ -395,6 +403,10 @@ function disattend(id){
     });
 }
 
+$("#se-maddag").on('closed.zf.reveal', function(){
+    initMaddage();
+});
+
 
 $("#maddagform-se-maddag").bind("keyup change", function(){
     datoid = $("#maddagform-se-maddag").data("id");
@@ -428,8 +440,55 @@ $("#maddagform-se-maddag").bind("keyup change", function(){
             xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
         },
         complete: function(jqXhr, textStatus){
-            //reloadRelevant();
+            reloadRelevant();
         }
     });
 });
 
+
+
+$("#new-maddag").click(function(){
+    $(this).slideUp();
+    $("#create-maddag").slideDown();
+
+    now = new Date();
+    day = ("0" + now.getDate()).slice(-2);
+    month = ("0" + (now.getMonth() + 1)).slice(-2);
+    today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $("#create-maddag input[name='date']").val(today);
+});
+
+$("#create-maddag").on('submit',function(e){
+    e.preventDefault();
+    $(this).slideUp();
+    $("#new-maddag").slideDown();
+
+    cook = $(this).find("select[name='cook']").val();
+    date = $(this).find("input[name='date']").val();
+
+    console.log(date);
+
+    payload = {"cook": cook, "date": date};
+
+    $.ajax({
+        url: "public/dates",
+        method: "POST",
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(payload),
+        success: function(data, textStatus, jqXhr){
+            initMaddage();
+        },
+        error: function(data, textStatus, jqXhr){
+            console.log(textStatus);
+            console.log(data);
+            localStorage.removeItem("jwt");
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        },
+        complete: function(jqXhr, textStatus){
+            reloadRelevant();
+        }
+    });
+});

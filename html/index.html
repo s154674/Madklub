@@ -202,17 +202,17 @@
 
                         <!-- This is the first modal -->
                         <div class="reveal large" id="se-maddag" data-reveal>
+                            <button class="close-button" data-close aria-label="Close modal" type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                             <form id="maddagform-se-maddag">
                                 <div class="grid-container">
                                     <div class="grid-x grid-margin-x">
-                                        <div class="cell medium-4">
-                                            <img id="attendance-se-maddag" src="logos/greencheck.png">
-                                        </div>
-                                        <div class="cell medium-4">
+                                        <div class="cell small-12">
                                             <h1 id="dato-se-maddag" class="text-center">Imorgen</h1>
                                         </div>
-                                        <div class="cell medium-offset-1 medium-3">
-                                            <button class="button alert expanded" data-open="luk-maddag" id="luk-se-maddag">Luk</button>
+                                        <div class="cell medium-4 medium-offset-4">
+                                            <button class="button alert expanded" data-open="luk-maddag" id="luk-se-maddag">Luk maddag</button>
                                         </div>
                                     </div>
                                     <div class="grid-x grid-margin-x">
@@ -325,24 +325,31 @@
 
                         <div class="grid-container">
                             <div class="grid-x grid-margin-x">
-                                <div class="cell medium-8 medium-offset-2">
-                                    <button class="button expanded">Opret maddag</button>
+                                <div class="cell">
+                                    <button id="new-maddag" class="button expanded">Opret maddag</button>
                                 </div>
                             </div>
-                            <div class="grid-x grid-margin-x">
-                                <div class="cell medium-6">
-                                    <label>Kok
-                                        <select>
-                                            <option>hej</option>
-                                        </select>
-                                    </label>
+                            <form id="create-maddag">
+                                <div class="grid-x grid-margin-x">
+                                    <div class="cell medium-4">
+                                        <label>Kok
+                                            <select name="cook">
+                                                <option>Fie pigen</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="cell small-6 medium-4">
+                                        <label>Dato
+                                            <input name="date" type="date">
+                                        </label>
+                                    </div>
+                                    <div class="cell small-6 medium-4">
+                                        <label>&nbsp;
+                                            <input class="button expanded" type="submit" value="Opret">
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="cell medium-6">
-                                    <label>Dato
-                                        <input type="date">
-                                    </label>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
 
