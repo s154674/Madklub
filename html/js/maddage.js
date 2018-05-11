@@ -78,6 +78,7 @@ function initMaddage(){
                         $("#cook-se-maddag").val(data.cook);
                         $("#dish-se-maddag").val(data.dish);
                         $("#help-se-maddag").val(data.help);
+                        $("#attendance-se-maddag").val(data.currentimg);
 
 
                         try {
