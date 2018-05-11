@@ -143,3 +143,17 @@ button.round, .button.round {
 h2{
     font-family: 'Quicksand', sans-serif;
 }
+
+#opvaskere table tbody tr {
+    border-bottom: none;
+    color: #8a8a8a;
+}
+
+#opvaskere table tbody tr:nth-child(-n+3){
+    border-bottom: dashed;
+    border-bottom-color: #8a8a8a;
+    color: #0a0a0a;
+}
+#opvaskere table tbody tr:nth-child(-n+2){
+    border-bottom: none;
+}

@@ -21,7 +21,7 @@ function updateAttendees(id) {
                 text = attendance.name;
 
                 if (attendance.guest==="1") {
-                    text += " + gæst";
+                    text += " + Gæst";
                     countfortable+=2;
                 } else {
                     countfortable+=1;
@@ -84,5 +84,35 @@ function initForside(){
         },
 
     });
+    $.ajax({
+        url: "public/washers",
+        method: "GET",
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data, textStatus, jqXhr){
+            console.log(data);
 
+            tab3 = $("#opvaskere table tbody");
+            tab3.empty();
+
+            $.each(data, function(i, washer){
+
+                text = washer.name;
+                row = "<tr><td>"+text+"</td></tr>";
+
+                if (i < 5) {
+                    tab3.append(row);
+                }
+
+            });
+
+        },
+        error: function(data, textStatus, jqXhr){
+            console.log(data);
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
+        }
+
+    });
 }
