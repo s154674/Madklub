@@ -1,14 +1,23 @@
 function initProfil(){
     console.log("Profil blev åbnet");
+    try {
+        decoded = jwt_decode(localStorage.getItem("jwt"));
+        id = decoded.bruger.id;
+        getUser(id);
+    } catch (e) {
+        console.log(e);
+        reloadRelevant();
+    }
 
-    decoded = jwt_decode(localStorage.getItem("jwt"));
-    id = decoded.bruger.id;
-
+}
+function getUser(id){
     $.ajax({
         url: "public/users/"+id,
         method: "GET",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         success: function(data, textStatus, jqXhr){
             $("#name-profil").val(data.name);
             $("#login-profil").val(data.login);
@@ -17,14 +26,9 @@ function initProfil(){
         },
         error: function (data, textStatus, jqXhr) {
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function (xhr, settings) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function (jqXhr, textStatus) {
-            reloadRelevant();
         }
     });
+
 }
 
 $("#name-profil").on('keyup', function(){
@@ -40,17 +44,12 @@ $("#name-profil").on('keyup', function(){
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify(payload),
+
         success: function(data, textStatus, jqXhr){
             console.log(data);
         },
         error: function (data, textStatus, jqXhr) {
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function (xhr, settings) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function (jqXhr, textStatus) {
-            reloadRelevant();
         }
     });
 });
@@ -73,18 +72,14 @@ $("#skift-password-form").on('submit', function(e){
         method: "PUT",
         contentType: 'application/json',
         data: JSON.stringify(payload),
+        beforeSend: addJWT,
+        complete: updateJWT,
         success: function(data, textStatus, jqXhr){
             $("#skift-password-profil").foundation('close');
             $(this).trigger('reset');
         },
         error: function (data, textStatus, jqXhr) {
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function (xhr, settings) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function (jqXhr, textStatus) {
-            reloadRelevant();
         }
     });
 });

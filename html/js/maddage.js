@@ -6,6 +6,8 @@ function initMaddage(){
         method: "GET",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         success: function(data, textStatus, jqXhr){
             datetabledata = $("#content-maddage table tbody");
             datetabledata.empty();
@@ -62,7 +64,8 @@ function initMaddage(){
                     method: "GET",
                     contentType: 'application/json',
                     dataType: 'json',
-                    success: function(data, textStatus, jqXhr){
+                    beforeSend: addJWT,
+                    complete: updateJWT,                    success: function(data, textStatus, jqXhr){
                         $("#dato-se-maddag").html(data.date);
                         $("#cook-se-maddag").val(data.cook);
                         $("#dish-se-maddag").val(data.dish);
@@ -101,15 +104,7 @@ function initMaddage(){
 
                         }
                     },
-                    error: function(data, textStatus, jqXhr){
-
-                    },
-                    beforeSend: function(xhr, settings) {
-                        xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-                    },
-                    complete: function(jqXhr, textStatus) {
-                        reloadRelevant();
-                    }
+                    error: function(data, textStatus, jqXhr){}
                 });
 
                 $.ajax({
@@ -117,6 +112,8 @@ function initMaddage(){
                     method: "GET",
                     contentType: 'application/json',
                     dataType: 'json',
+                    beforeSend: addJWT,
+                    complete: updateJWT,
                     success: function(data, textStatus, jqXhr){
 
                         eatertable = $("#eaters table tbody");
@@ -153,12 +150,6 @@ function initMaddage(){
                     },
                     error: function (data, textStatus, jqXhr) {
                         localStorage.removeItem("jwt");
-                    },
-                    beforeSend: function (xhr, settings) {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem("jwt"));
-                    },
-                    complete: function (jqXhr, textStatus) {
-                        reloadRelevant();
                     }
                 });
                 $('#se-maddag').foundation('open');
@@ -192,12 +183,6 @@ function initMaddage(){
         },
         error: function(data, textStatus, jqXhr){
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 
@@ -208,6 +193,8 @@ function initMaddage(){
         method: "GET",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         success: function(data, textStatus, jqXhr){
             users = data;
             select1 = $("#cook-se-maddag");
@@ -241,12 +228,6 @@ function initMaddage(){
         },
         error: function (data, textStatus, jqXhr) {
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function (xhr, settings) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function (jqXhr, textStatus) {
-            reloadRelevant();
         }
     });
 
@@ -283,18 +264,14 @@ function attend(id){
         method: "PUT",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         data: JSON.stringify({late: 0, guest:0}),
         success: function(data, textStatus, jqXhr){
             $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/greencheck.png");
         },
         error: function(data, textStatus, jqXhr){
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 }
@@ -306,18 +283,14 @@ function late(id){
         method: "PUT",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         data: JSON.stringify({late: 1, guest:0}),
         success: function(data, textStatus, jqXhr){
             $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/yellowcheck.png");
         },
         error: function(data, textStatus, jqXhr){
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 }
@@ -329,6 +302,8 @@ function guest(id){
         method: "PUT",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         data: JSON.stringify({late: 0, guest:1}),
         success: function(data, textStatus, jqXhr){
             console.log("guested");
@@ -336,12 +311,6 @@ function guest(id){
         },
         error: function(data, textStatus, jqXhr){
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 }
@@ -353,6 +322,8 @@ function lateguest(id){
         method: "PUT",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         data: JSON.stringify({late: 1, guest:1}),
         success: function(data, textStatus, jqXhr){
             console.log("laterguested");
@@ -360,12 +331,6 @@ function lateguest(id){
         },
         error: function(data, textStatus, jqXhr){
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 }
@@ -377,17 +342,13 @@ function disattend(id){
         method: "DELETE",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         success: function(data, textStatus, jqXhr){
             $("#content-maddage table tbody tr#date-"+id+" td:last-child img.current").attr("src","logos/noee.png");
         },
         error: function(data, textStatus, jqXhr){
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 }
@@ -416,10 +377,10 @@ $("#maddagform-se-maddag").bind("keyup change", function() {
         method: "PUT",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         data: JSON.stringify(payload),
         success: function(data, textStatus, jqXhr){
-            console.log(data);
-
             row = $("#date-"+datoid);
             user = users.find(function(user){
                 return user.user_id === cook;
@@ -431,12 +392,6 @@ $("#maddagform-se-maddag").bind("keyup change", function() {
         },
         error: function(data, textStatus, jqXhr){
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 });
@@ -451,6 +406,8 @@ $("#luk-se-maddag").click(function(){
         method: "GET",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         success: function(data, textStatus, jqXhr){
             washer1 = data[0];
             washer2 = data[1];
@@ -465,12 +422,6 @@ $("#luk-se-maddag").click(function(){
         },
         error: function(data, textStatus, jqXhr){
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 });
@@ -501,18 +452,14 @@ $("#luk-maddag form").on('submit', function(e){
         method: "PUT",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         data: JSON.stringify(payload),
         success: function(data, textStatus, jqXhr){
             console.log(data);
         },
         error: function(data, textStatus, jqXhr){
             //localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 
@@ -547,20 +494,14 @@ $("#create-maddag").on('submit',function(e){
         method: "POST",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         data: JSON.stringify(payload),
         success: function(data, textStatus, jqXhr){
-            console.log(data);
             initMaddage();
         },
         error: function(data, textStatus, jqXhr){
-            console.log(data);
             localStorage.removeItem("jwt");
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-        complete: function(jqXhr, textStatus){
-            reloadRelevant();
         }
     });
 });

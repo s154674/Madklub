@@ -1,7 +1,7 @@
 function reloadRelevant() {
     try {
         decoded = jwt_decode(localStorage.getItem("jwt"));
-        $("#menu-navn").html(decoded.bruger.login);
+        $("#menu-navn").html(decoded.bruger.navn);
 
         $("#menu-forside").show(); $("#offmenu-forside").show();
         $("#menu-status").show();  $("#offmenu-status").show();
@@ -211,3 +211,21 @@ function navigateToLogind(){
 }
 $("#offmenu-logind").click(navigateToLogind);
 $("#menu-logind").click(navigateToLogind);
+
+
+
+// Utilites:
+addJWT = function (xhr, settings) {
+    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem("jwt"));
+};
+
+updateJWT = function(jqXhr, textStatus){
+    var jwt;
+    try {
+        jwt =  jqXhr.getResponseHeader('Authorization').substring(7);
+    } catch(e) {
+        jwt = null;
+    }
+    localStorage.setItem("jwt", jwt);
+    reloadRelevant();
+};

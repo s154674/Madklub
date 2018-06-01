@@ -1,12 +1,12 @@
-function updateAttendees(id) {
+function getAttendees(id) {
     $.ajax({
         url: "public/dates/"+id+"/attendees",
         method: "GET",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         success: function(data, textStatus, jqXhr){
-            console.log(data);
-
             tab1 = $("#panel1 table tbody");
             tab2 = $("#panel2 table tbody");
             tilmeldte = $("#tilmeldte-antal");
@@ -27,7 +27,6 @@ function updateAttendees(id) {
                     countfortable+=1;
                 }
 
-
                 row = "<tr><td>"+text+"</td></tr>";
 
                 if (attendance.late==="1"){
@@ -35,33 +34,24 @@ function updateAttendees(id) {
                 } else {
                     tab1.append(row);
                 }
-                console.log(countfortable);
 
             });
             antaltilmeldte = "<h2>" +"Tilmeldte(" + countfortable +"):"+"</h2>";
             tilmeldte.append(antaltilmeldte);
         },
-        error: function(data, textStatus, jqXhr){
-            console.log(data);
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        }
-
+        error: function(data, textStatus, jqXhr){}
     });
 }
 function initForside(){
-    console.log("Forside blev åbnet")
     $.ajax({
         url: "public/frontpage",
         method: "GET",
         contentType: 'application/json',
+        dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         success: function(data, textStatus, jqXhr){
-            data = JSON.parse(data);
-           // console.log(JSON.stringify(data) + " i did this");
-            console.log(data);
             datoid = data.date_id;
-            console.log(datoid);
 
             peopletabledata = $("#first-box");
             peopletabledata.empty();
@@ -75,23 +65,18 @@ function initForside(){
             peopletabledata.append(row3);
             peopletabledata.append(row4);
 
-            updateAttendees(datoid);
+            getAttendees(datoid);
         },
-        error: function(data, textStatus, jqXhr){
-            console.log(data);
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        },
-
+        error: function(data, textStatus, jqXhr){}
     });
     $.ajax({
         url: "public/washers",
         method: "GET",
         contentType: 'application/json',
         dataType: 'json',
+        beforeSend: addJWT,
+        complete: updateJWT,
         success: function(data, textStatus, jqXhr){
-            console.log(data);
 
             tab3 = $("#opvaskere table tbody");
             tab3.empty();
@@ -108,12 +93,6 @@ function initForside(){
             });
 
         },
-        error: function(data, textStatus, jqXhr){
-            console.log(data);
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('Authorization','Bearer ' + localStorage.getItem("jwt"));
-        }
-
+        error: function(data, textStatus, jqXhr){}
     });
 }
